@@ -1,93 +1,169 @@
-/**
- * Vaccination Center Map + Listing Handler
- * Works with AI Assistant output containing hidden <!--DATA ... DATA--> block
- */
+// assets/js/vaccination.js
+// Google Maps + Places API (2025 version) with MAP + CARD LIST + INTERACTION
 
-let vaccinationCenters = [];
+let map;
+let placesService;
+let markers = [];
+let cardMap = new Map();  // For linking cards <-> markers
 
-/**
- * Extract DATA block from AI message and display centers
- */
-function processVaccinationData(aiMessage) {
-    // 1️⃣ Extract hidden DATA block
-    const match = aiMessage.match(/<!--DATA([\s\S]*?)DATA-->/);
+const pinInput = document.getElementById("searchLocation");
+const statusEl = document.getElementById("searchStatus");
+const centersListEl = document.getElementById("centersList");
 
-    if (!match) {
-        console.warn("⚠️ No DATA block found in message.");
-        return aiMessage; // return original message for chat display
+/* INITIALIZE MAP */
+function initMap() {
+  const indiaCenter = { lat: 22.9734, lng: 78.6569 };
+
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: indiaCenter,
+    zoom: 5,
+  });
+
+  placesService = new google.maps.places.PlacesService(map);
+
+  if (pinInput) {
+    pinInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") searchCenters();
+    });
+  }
+}
+
+/* CLEAR OLD MARKERS */
+function clearMarkers() {
+  markers.forEach((m) => m.setMap(null));
+  markers = [];
+  cardMap.clear();
+}
+
+/* RENDER CARDS BELOW MAP */
+function renderCentersList(places) {
+  centersListEl.innerHTML = "";
+
+  if (!places || places.length === 0) {
+    centersListEl.innerHTML = `
+      <div class="bg-white rounded-2xl shadow-md p-6 text-center">
+        <p class="text-gray-700">No hospitals found near this PIN code.</p>
+      </div>`;
+    return;
+  }
+
+  places.forEach((place, index) => {
+    const placeName = place.name || place.displayName?.text || "Hospital";
+    const address =
+      place.vicinity || place.shortFormattedAddress || place.formattedAddress || "Not available";
+    const rating = place.rating ? `${place.rating} ⭐` : "Not rated";
+
+    const card = document.createElement("div");
+    card.className =
+      "bg-white rounded-2xl shadow-md p-6 card-hover mb-4 transition cursor-pointer";
+    card.id = `place-card-${index}`;
+
+    card.innerHTML = `
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-gray-800 mb-2">${placeName}</h3>
+          <p class="text-gray-600 mb-1">
+            <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>${address}
+          </p>
+          <p class="text-gray-600">
+            <i class="fas fa-star text-yellow-400 mr-2"></i>${rating}
+          </p>
+        </div>
+      </div>
+    `;
+
+    // CARD → MARKER CLICK
+    card.addEventListener("click", () => {
+      const mk = cardMap.get(index);
+      map.panTo(mk.position);
+      map.setZoom(16);
+      google.maps.event.trigger(mk, "click");
+    });
+
+    centersListEl.appendChild(card);
+  });
+}
+
+/* MAIN SEARCH FUNCTION */
+function searchCenters() {
+  const pin = pinInput.value.trim();
+
+  if (!/^[1-9][0-9]{5}$/.test(pin)) {
+    statusEl.textContent = "Enter a valid 6-digit PIN code.";
+    statusEl.className = "text-red-600 text-center mt-3";
+    return;
+  }
+
+  statusEl.textContent = `Finding location for PIN ${pin}...`;
+  statusEl.className = "text-blue-600 text-center mt-3";
+
+  const geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address: `${pin}, India` }, (results, status) => {
+    if (status !== "OK") {
+      statusEl.textContent = "Unable to locate this PIN.";
+      statusEl.className = "text-red-600 text-center mt-3";
+      return;
     }
 
-    const rawData = match[1].trim().split("\n");
+    const location = results[0].geometry.location;
 
-    // 2️⃣ Convert DATA → Center objects
-    vaccinationCenters = rawData.map(line => {
-        const parts = line.split("|").map(x => x.trim());
+    map.setCenter(location);
+    map.setZoom(14);
 
-        return {
-            name: parts[0],
-            lat: parseFloat(parts[1]),
-            lng: parseFloat(parts[2]),
-            address: parts[3],
-            timing: parts[4] ?? "Not Available",
-            status: (parts[5] ?? "open").toLowerCase(),
-            vaccines: ["Polio", "Tetanus", "Routine"] // or dynamic if needed
-        };
+    clearMarkers();
+
+    statusEl.textContent = `Finding hospitals near ${pin}...`;
+
+    const request = {
+      location,
+      radius: 5000,
+      type: "hospital",
+    };
+
+    placesService.nearbySearch(request, (places, status) => {
+      if (status !== google.maps.places.PlacesServiceStatus.OK || !places) {
+        statusEl.textContent = "No hospitals found.";
+        return;
+      }
+
+      statusEl.textContent = `Found ${places.length} hospitals.`;
+      statusEl.className = "text-green-600 text-center mt-3";
+
+      renderCentersList(places);
+
+      // MARKERS ON MAP
+      places.forEach((place, index) => {
+        if (!place.geometry) return;
+
+        const marker = new google.maps.Marker({
+          position: place.geometry.location,
+          map,
+          title: place.name,
+        });
+
+        const info = new google.maps.InfoWindow({
+          content: `<strong>${place.name}</strong><br>${place.vicinity ?? ""}`,
+        });
+
+        marker.addListener("click", () => {
+          info.open(map, marker);
+
+          // HIGHLIGHT CARD WHEN MARKER CLICKED
+          const card = document.getElementById(`place-card-${index}`);
+          if (card) {
+            card.scrollIntoView({ behavior: "smooth", block: "center" });
+            card.classList.add("ring-2", "ring-blue-500");
+            setTimeout(() => card.classList.remove("ring-2", "ring-blue-500"), 2000);
+          }
+        });
+
+        markers.push(marker);
+        cardMap.set(index, marker);
+      });
     });
-
-    // 3️⃣ Display in UI
-    displayCenters(vaccinationCenters);
-
-    // 4️⃣ Remove DATA block before showing chat message to user
-    return aiMessage.replace(/<!--DATA[\s\S]*?DATA-->/, "").trim();
+  });
 }
 
-/**
- * Display vaccination centers on the page
- */
-function displayCenters(centers) {
-    const centersList = document.getElementById('centersList');
-    if (!centersList) return;
-
-    centersList.innerHTML = centers.map(center => {
-        const statusClass = center.status === 'open'
-            ? 'bg-green-100 text-green-700'
-            : 'bg-gray-100 text-gray-700';
-
-        return `
-            <div class="bg-white rounded-2xl shadow-md p-6 card-hover mb-4">
-                <div class="flex items-start justify-between mb-4">
-                    <div class="flex-1">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">${center.name}</h3>
-
-                        <p class="text-gray-600 mb-2">
-                            <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
-                            ${center.address}
-                        </p>
-
-                        <p class="text-gray-600 mb-2">
-                            <i class="fas fa-clock text-orange-600 mr-2"></i>
-                            Timing: ${center.timing}
-                        </p>
-                    </div>
-
-                    <span class="${statusClass} px-4 py-2 rounded-full text-sm font-semibold">
-                        ${center.status === "open" ? "Open" : "Closed"}
-                    </span>
-                </div>
-            </div>
-        `;
-    }).join("");
-}
-
-/**
- * Optional: function to load markers on your map UI (Leaflet/Google Maps)
- */
-function loadMapMarkers(map) {
-    if (!map || !vaccinationCenters.length) return;
-
-    vaccinationCenters.forEach(center => {
-        L.marker([center.lat, center.lng])
-            .addTo(map)
-            .bindPopup(`<strong>${center.name}</strong><br>${center.address}`);
-    });
-}
+window.initMap = initMap;
+window.searchCenters = searchCenters;
+window.loadMoreCenters = searchCenters;
