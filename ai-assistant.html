@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant - Sehat Saathi</title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Poppins', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 bg-white shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <i class="fas fa-heartbeat text-3xl text-blue-600"></i>
+                    <div>
+                        <span class="text-2xl font-bold text-blue-600">Sehat Saathi</span>
+                        <p class="text-xs text-gray-500">आपका डिजिटल स्वास्थ्य साथी</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Home</a>
+                    <a href="ai-assistant.html" class="nav-link text-blue-600 font-medium text-lg">AI Assistant</a>
+                    <a href="health-hub.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Health Hub</a>
+                    <a href="schemes.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Schemes</a>
+                    <a href="vaccination-center.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Vaccination
+                        Center</a>
+                    <button id="darkModeToggle" class="text-2xl hover:scale-110 transition-transform"
+                        aria-label="Toggle dark mode">🌙</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <button id="darkModeToggle" class="text-2xl hover:scale-110 transition-transform"
+                        aria-label="Toggle dark mode">🌙</button>
+                    <button id="mobileMenuBtn" class="text-gray-700">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="container mx-auto px-4 py-4 space-y-3">
+                <a href="index.html" class="block text-gray-700 hover:text-blue-600 transition font-medium">Home</a>
+                <a href="ai-assistant.html" class="block text-blue-600 font-medium">AI Assistant</a>
+                <a href="health-hub.html" class="block text-gray-700 hover:text-blue-600 transition font-medium">Health
+                    Hub</a>
+                <a href="schemes.html"
+                    class="block text-gray-700 hover:text-blue-600 transition font-medium">Schemes</a>
+                <a href="vaccination-center.html"
+                    class="block text-gray-700 hover:text-blue-600 transition font-medium">Vaccination Center</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Chat Assistant Page -->
+    <section class="pt-20 pb-8 min-h-screen">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-6">
+
+                <!-- Left Sidebar -->
+                <div class="lg:w-80 flex-shrink-0">
+                    <div class="bg-white rounded-2xl shadow-md p-6 sticky top-24">
+                        <!-- Profile -->
+                        <div class="flex items-center space-x-3 mb-6 pb-6 border-b">
+                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-gray-800">Your Profile</h3>
+                                <p class="text-sm text-gray-500 flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                    Online
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown -->
+                        <div class="mb-6">
+                            <select
+                                class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:border-blue-500">
+                                <option>Chat for Myself</option>
+                                <option>Chat for Family Member</option>
+                            </select>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-gray-800 mb-3">Quick Actions</h4>
+                            <div class="space-y-2">
+                                <button
+                                    class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center space-x-2">
+                                    <i class="fas fa-stethoscope text-blue-600"></i>
+                                    <span>Check Symptoms</span>
+                                </button>
+                                <button
+                                    class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center space-x-2">
+                                    <i class="fas fa-syringe text-green-600"></i>
+                                    <span>Find Vaccination Centers</span>
+                                </button>
+                                <button
+                                    class="w-full text-left px-4 py-2 rounded-lg hover:bg-gray-50 text-gray-700 flex items-center space-x-2">
+                                    <i class="fas fa-landmark text-purple-600"></i>
+                                    <span>Government Schemes</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Emergency Contacts -->
+                        <div class="mb-6">
+                            <h4 class="font-semibold text-gray-800 mb-3">Emergency Contacts</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-ambulance text-red-600"></i>
+                                        <span class="text-sm font-medium">Ambulance</span>
+                                    </div>
+                                    <span class="font-bold text-red-600">108</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-phone-alt text-orange-600"></i>
+                                        <span class="text-sm font-medium">Poison Control</span>
+                                    </div>
+                                    <span class="font-bold text-orange-600">1066</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Alerts -->
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-3">Recent Alerts</h4>
+                            <div class="space-y-2">
+                                <div class="p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                                    <p class="text-sm font-medium text-gray-800">Dengue Alert</p>
+                                    <p class="text-xs text-gray-600">Active in your area</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Chat Section -->
+                <div class="flex-1">
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+                        <!-- Chat Header -->
+                        <div class="bg-gradient-to-r from-blue-600 to-green-600 p-6 text-white">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-robot text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold">Sehat Saathi AI</h3>
+                                    <p class="text-sm opacity-90">Your digital health companion</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat Messages Area -->
+                        <div id="chatMessages" class="h-96 md:h-[500px] overflow-y-auto p-6 bg-gray-50 space-y-4">
+                            <!-- Welcome message will be added by JavaScript -->
+                        </div>
+
+                        <!-- Typing Indicator -->
+                        <div id="typingIndicator" class="hidden px-6 py-2">
+                            <!-- Will be shown when bot is typing -->
+                        </div>
+
+                        <!-- Bot Tips Card -->
+                        <div class="px-6 py-4 bg-blue-50 border-t">
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-lightbulb text-yellow-500 text-xl mt-1"></i>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-800">Health Tip</p>
+                                    <p class="text-xs text-gray-600">Stay hydrated and maintain good hygiene to prevent
+                                        common illnesses.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Warning Box -->
+                        <div class="px-6 py-4 warning-box">
+                            <p class="text-sm font-medium text-gray-800">
+                                <i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>
+                                Consult a doctor if symptoms persist for more than 3 days or worsen.
+                            </p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="px-6 py-4 bg-white border-t flex flex-wrap gap-3">
+                            <button
+                                class="px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition text-sm font-medium">
+                                <i class="fas fa-hospital mr-2"></i>Find Hospitals
+                            </button>
+                            <button
+                                class="px-4 py-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition text-sm font-medium">
+                                <i class="fas fa-shield-alt mr-2"></i>Check Ayushman Bharat Eligibility
+                            </button>
+                            <button
+                                class="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition text-sm font-medium">
+                                <i class="fas fa-phone-alt mr-2"></i>Emergency Contacts
+                            </button>
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div class="p-6 bg-white border-t">
+                            <div class="flex items-center space-x-4">
+                                <input type="text" id="chatInput"
+                                    placeholder="Type your message... / अपना संदेश टाइप करें..."
+                                    class="flex-1 border-2 border-gray-300 rounded-full px-6 py-3 focus:outline-none focus:border-blue-500 text-base">
+                                <button id="sendButton"
+                                    class="bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg transform hover:scale-110 transition-all duration-300"
+                                    aria-label="Send message">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Left Section - Logo & Info -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-heartbeat text-3xl text-blue-400"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">Sehat Saathi</h3>
+                            <p class="text-sm text-gray-400">स्वास्थ्य साथी</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                        AI-powered health companion providing personalized guidance in your language. Bridging the gap
+                        between government health initiatives and citizen awareness.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-slate-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-slate-800 hover:bg-blue-400 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Middle Section - Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="ai-assistant.html"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">AI Assistant</a>
+                        </li>
+                        <li>
+                            <a href="health-hub.html"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Health Hub</a>
+                        </li>
+                        <li>
+                            <a href="schemes.html"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Government
+                                Schemes</a>
+                        </li>
+                        <li>
+                            <a href="index.html#emergency"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Emergency Guide</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Section - Support -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Support</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Help
+                                Center</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Privacy
+                                Policy</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Terms of
+                                Service</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Contact
+                                Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Bar -->
+        <div class="border-t border-slate-800">
+            <div class="container mx-auto px-4 py-6">
+                <p class="text-center text-gray-400 text-sm">
+                    © 2025 Sehat Saathi. All Rights Reserved. | Empowering Indian families with accessible healthcare
+                    guidance.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="assets/js/darkmode.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/chat.js"></script>
+</body>
+
+</html>

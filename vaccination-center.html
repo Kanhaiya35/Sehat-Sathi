@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccination Center - Sehat Saathi</title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Poppins', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 bg-white shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <i class="fas fa-heartbeat text-3xl text-blue-600"></i>
+                    <div>
+                        <span class="text-2xl font-bold text-blue-600">Sehat Saathi</span>
+                        <p class="text-xs text-gray-500">आपका डिजिटल स्वास्थ्य साथी</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Home</a>
+                    <a href="ai-assistant.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">AI
+                        Assistant</a>
+                    <a href="health-hub.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Health Hub</a>
+                    <a href="schemes.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Schemes</a>
+                    <a href="vaccination-center.html" class="nav-link text-blue-600 font-medium text-lg">Vaccination
+                        Center</a>
+                    <button id="darkModeToggle" class="text-2xl hover:scale-110 transition-transform"
+                        aria-label="Toggle dark mode">🌙</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <button id="darkModeToggle" class="text-2xl hover:scale-110 transition-transform"
+                        aria-label="Toggle dark mode">🌙</button>
+                    <button id="mobileMenuBtn" class="text-gray-700">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="container mx-auto px-4 py-4 space-y-3">
+                <a href="index.html" class="block text-gray-700 hover:text-blue-600 transition font-medium">Home</a>
+                <a href="ai-assistant.html" class="block text-gray-700 hover:text-blue-600 transition font-medium">AI
+                    Assistant</a>
+                <a href="health-hub.html" class="block text-gray-700 hover:text-blue-600 transition font-medium">Health
+                    Hub</a>
+                <a href="schemes.html"
+                    class="block text-gray-700 hover:text-blue-600 transition font-medium">Schemes</a>
+                <a href="vaccination-center.html" class="block text-blue-600 font-medium">Vaccination Center</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 bg-gradient-to-br from-blue-50 via-green-50 to-blue-50">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                Find Vaccination <span class="text-blue-600">Centers Near You</span>
+            </h1>
+            <p class="hindi-subtitle mb-8">अपने पास के टीकाकरण केंद्र खोजें</p>
+
+            <!-- Search Box -->
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input type="text" id="searchLocation" placeholder="Enter pincode or location..."
+                        class="w-full border-2 border-gray-300 rounded-full px-6 py-4 pl-12 pr-12 focus:outline-none focus:border-blue-500 text-lg">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <button onclick="searchCenters()"
+                        class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold transition">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Placeholder -->
+    <section class="py-8 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="bg-gray-200 rounded-2xl h-96 flex items-center justify-center">
+                <div class="text-center">
+                    <i class="fas fa-map-marked-alt text-6xl text-gray-400 mb-4"></i>
+                    <p class="text-gray-600 text-lg">Map will be displayed here</p>
+                    <p class="text-gray-500 text-sm">Enter location to see vaccination centers on map</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Complete Immunization Schedule -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Complete <span class="text-blue-600">Immunization Schedule</span>
+                </h2>
+                <p class="hindi-subtitle mb-2">पूर्ण टीकाकरण कार्यक्रम</p>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    Follow this comprehensive vaccination schedule to protect yourself and your family from preventable
+                    diseases
+                </p>
+            </div>
+
+            <!-- Schedule Tabs -->
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <button onclick="showSchedule('infant')" id="tab-infant"
+                        class="schedule-tab active bg-blue-600 text-white px-6 py-3 rounded-full font-semibold transition">
+                        Infants (0-12 months)
+                    </button>
+                    <button onclick="showSchedule('toddler')" id="tab-toddler"
+                        class="schedule-tab bg-gray-200 text-gray-700 hover:bg-gray-300 px-6 py-3 rounded-full font-semibold transition">
+                        Toddlers (1-2 years)
+                    </button>
+                    <button onclick="showSchedule('child')" id="tab-child"
+                        class="schedule-tab bg-gray-200 text-gray-700 hover:bg-gray-300 px-6 py-3 rounded-full font-semibold transition">
+                        Children (2-10 years)
+                    </button>
+                    <button onclick="showSchedule('adolescent')" id="tab-adolescent"
+                        class="schedule-tab bg-gray-200 text-gray-700 hover:bg-gray-300 px-6 py-3 rounded-full font-semibold transition">
+                        Adolescents (10-18 years)
+                    </button>
+                    <button onclick="showSchedule('adult')" id="tab-adult"
+                        class="schedule-tab bg-gray-200 text-gray-700 hover:bg-gray-300 px-6 py-3 rounded-full font-semibold transition">
+                        Adults (18+ years)
+                    </button>
+                </div>
+
+                <!-- Infant Schedule (0-12 months) -->
+                <div id="schedule-infant" class="schedule-content">
+                    <div class="bg-gradient-to-br from-blue-50 to-green-50 rounded-2xl p-8 shadow-md">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Infant Immunization Schedule (0-12 months)
+                        </h3>
+                        <div class="space-y-6">
+                            <!-- Birth -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-blue-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">At Birth</h4>
+                                        <p class="text-gray-600 text-sm">Within 24 hours of birth</p>
+                                    </div>
+                                    <span
+                                        class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">Essential</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">BCG (Bacillus
+                                                Calmette-Guérin)</span>
+                                            <p class="text-sm text-gray-600">Protects against Tuberculosis</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">OPV-0 (Oral Polio Vaccine)</span>
+                                            <p class="text-sm text-gray-600">First dose of Polio vaccine</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Hepatitis B - 1st dose</span>
+                                            <p class="text-sm text-gray-600">Protects against Hepatitis B</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- 6 weeks -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-green-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">6 Weeks</h4>
+                                        <p class="text-gray-600 text-sm">First routine immunization</p>
+                                    </div>
+                                    <span
+                                        class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Important</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">DPT-1 (Diphtheria, Pertussis,
+                                                Tetanus)</span>
+                                            <p class="text-sm text-gray-600">First dose</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">OPV-1 (Oral Polio Vaccine)</span>
+                                            <p class="text-sm text-gray-600">Second dose</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Hepatitis B - 2nd dose</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Hib-1 (Haemophilus influenzae type
+                                                b)</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Rotavirus - 1st dose</span>
+                                            <p class="text-sm text-gray-600">Protects against diarrhea</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- 10 weeks -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-orange-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">10 Weeks</h4>
+                                        <p class="text-gray-600 text-sm">Second routine immunization</p>
+                                    </div>
+                                    <span
+                                        class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">Required</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">DPT-2</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">OPV-2</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Hib-2</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Rotavirus - 2nd dose</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- 14 weeks -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-purple-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">14 Weeks</h4>
+                                        <p class="text-gray-600 text-sm">Third routine immunization</p>
+                                    </div>
+                                    <span
+                                        class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">Required</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">DPT-3</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">OPV-3</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Hib-3</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">IPV (Inactivated Polio
+                                                Vaccine)</span>
+                                            <p class="text-sm text-gray-600">Injectable polio vaccine</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- 9-12 months -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-pink-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">9-12 Months</h4>
+                                        <p class="text-gray-600 text-sm">Important booster doses</p>
+                                    </div>
+                                    <span
+                                        class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-semibold">Critical</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">MMR-1 (Measles, Mumps,
+                                                Rubella)</span>
+                                            <p class="text-sm text-gray-600">First dose</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">JE-1 (Japanese
+                                                Encephalitis)</span>
+                                            <p class="text-sm text-gray-600">In endemic areas</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Vitamin A - 1st dose</span>
+                                            <p class="text-sm text-gray-600">First dose</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toddler Schedule (1-2 years) -->
+                <div id="schedule-toddler" class="schedule-content hidden">
+                    <div class="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl p-8 shadow-md">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Toddler Immunization Schedule (1-2 years)</h3>
+                        <div class="space-y-6">
+                            <!-- 15-18 months -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-blue-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">15-18 Months</h4>
+                                        <p class="text-gray-600 text-sm">Booster doses</p>
+                                    </div>
+                                    <span
+                                        class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">Essential</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">DPT Booster-1</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">OPV Booster-1</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">MMR-2</span>
+                                            <p class="text-sm text-gray-600">Second dose</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">JE-2</span>
+                                            <p class="text-sm text-gray-600">In endemic areas</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Vitamin A - 2nd dose</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- 2 years -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-green-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">2 Years</h4>
+                                        <p class="text-gray-600 text-sm">Annual dose</p>
+                                    </div>
+                                    <span
+                                        class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Important</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Vitamin A - 3rd dose</span>
+                                            <p class="text-sm text-gray-600">Annual dose (up to 5 years)</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Child Schedule (2-10 years) -->
+                <div id="schedule-child" class="schedule-content hidden">
+                    <div class="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-2xl p-8 shadow-md">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Child Immunization Schedule (2-10 years)</h3>
+                        <div class="space-y-6">
+                            <!-- 5 years -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-orange-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">5 Years</h4>
+                                        <p class="text-gray-600 text-sm">Pre-school booster</p>
+                                    </div>
+                                    <span
+                                        class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-semibold">Essential</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">DPT Booster-2</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">OPV Booster-2</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- 10 years -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-purple-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">10 Years</h4>
+                                        <p class="text-gray-600 text-sm">Tetanus booster</p>
+                                    </div>
+                                    <span
+                                        class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">Recommended</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">TT (Tetanus Toxoid)</span>
+                                            <p class="text-sm text-gray-600">Booster dose</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adolescent Schedule (10-18 years) -->
+                <div id="schedule-adolescent" class="schedule-content hidden">
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 shadow-md">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Adolescent Immunization Schedule (10-18 years)
+                        </h3>
+                        <div class="space-y-6">
+                            <!-- 16 years -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-purple-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">16 Years</h4>
+                                        <p class="text-gray-600 text-sm">Tetanus booster</p>
+                                    </div>
+                                    <span
+                                        class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">Recommended</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">TT Booster</span>
+                                            <p class="text-sm text-gray-600">Every 10 years</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Additional for Girls -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-pink-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">For Girls (10-12 years)</h4>
+                                        <p class="text-gray-600 text-sm">HPV vaccination</p>
+                                    </div>
+                                    <span
+                                        class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-semibold">Recommended</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">HPV (Human Papillomavirus)</span>
+                                            <p class="text-sm text-gray-600">2-3 doses, protects against cervical cancer
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Adult Schedule (18+ years) -->
+                <div id="schedule-adult" class="schedule-content hidden">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-md">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Adult Immunization Schedule (18+ years)</h3>
+                        <div class="space-y-6">
+                            <!-- Regular Boosters -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-blue-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">Every 10 Years</h4>
+                                        <p class="text-gray-600 text-sm">Regular boosters</p>
+                                    </div>
+                                    <span
+                                        class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">Essential</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">TT (Tetanus Toxoid)</span>
+                                            <p class="text-sm text-gray-600">Booster every 10 years</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Annual -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-green-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">Annual</h4>
+                                        <p class="text-gray-600 text-sm">Seasonal vaccines</p>
+                                    </div>
+                                    <span
+                                        class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Recommended</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Influenza (Flu) Vaccine</span>
+                                            <p class="text-sm text-gray-600">Especially for elderly and high-risk groups
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- COVID-19 -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-red-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">COVID-19</h4>
+                                        <p class="text-gray-600 text-sm">As per government guidelines</p>
+                                    </div>
+                                    <span
+                                        class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">Important</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">COVID-19 Vaccine</span>
+                                            <p class="text-sm text-gray-600">Primary series + boosters as recommended
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Special Conditions -->
+                            <div class="bg-white rounded-xl p-6 border-l-4 border-yellow-600">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-800 mb-2">Special Conditions</h4>
+                                        <p class="text-gray-600 text-sm">Based on health status</p>
+                                    </div>
+                                    <span
+                                        class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">As
+                                        Needed</span>
+                                </div>
+                                <ul class="space-y-2">
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Hepatitis B</span>
+                                            <p class="text-sm text-gray-600">If not vaccinated earlier</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                                        <div>
+                                            <span class="font-semibold text-gray-800">Pneumococcal</span>
+                                            <p class="text-sm text-gray-600">For elderly (65+) and high-risk groups</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vaccination Centers List -->
+    <section class="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8">
+                Vaccination <span class="text-blue-600">Centers</span>
+            </h2>
+
+            <div id="centersList" class="space-y-4">
+                <!-- Center 1 -->
+                <div class="bg-white rounded-2xl shadow-md p-6 card-hover">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">City Health Center</h3>
+                            <p class="text-gray-600 mb-2">
+                                <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
+                                123 Main Street, City Center
+                            </p>
+                            <p class="text-gray-600 mb-2">
+                                <i class="fas fa-phone text-green-600 mr-2"></i>
+                                +91 1234567890
+                            </p>
+                        </div>
+                        <span
+                            class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">Open</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600">
+                                <i class="fas fa-clock text-orange-600 mr-2"></i>
+                                Timing: 9:00 AM - 5:00 PM
+                            </p>
+                            <p class="text-sm text-gray-600 mt-1">
+                                <i class="fas fa-syringe text-blue-600 mr-2"></i>
+                                Available: COVID-19, DPT, MMR, BCG
+                            </p>
+                        </div>
+                        <button
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Center 2 -->
+                <div class="bg-white rounded-2xl shadow-md p-6 card-hover">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Community Health Clinic</h3>
+                            <p class="text-gray-600 mb-2">
+                                <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
+                                456 Village Road, Rural Area
+                            </p>
+                            <p class="text-gray-600 mb-2">
+                                <i class="fas fa-phone text-green-600 mr-2"></i>
+                                +91 9876543210
+                            </p>
+                        </div>
+                        <span
+                            class="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">Open</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600">
+                                <i class="fas fa-clock text-orange-600 mr-2"></i>
+                                Timing: 10:00 AM - 4:00 PM
+                            </p>
+                            <p class="text-sm text-gray-600 mt-1">
+                                <i class="fas fa-syringe text-blue-600 mr-2"></i>
+                                Available: All Routine Vaccinations
+                            </p>
+                        </div>
+                        <button
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Center 3 -->
+                <div class="bg-white rounded-2xl shadow-md p-6 card-hover">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">District Hospital</h3>
+                            <p class="text-gray-600 mb-2">
+                                <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
+                                789 Hospital Lane, District HQ
+                            </p>
+                            <p class="text-gray-600 mb-2">
+                                <i class="fas fa-phone text-green-600 mr-2"></i>
+                                +91 1122334455
+                            </p>
+                        </div>
+                        <span
+                            class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-semibold">Closed</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600">
+                                <i class="fas fa-clock text-orange-600 mr-2"></i>
+                                Timing: 8:00 AM - 6:00 PM (Closed on Sundays)
+                            </p>
+                            <p class="text-sm text-gray-600 mt-1">
+                                <i class="fas fa-syringe text-blue-600 mr-2"></i>
+                                Available: All Vaccines
+                            </p>
+                        </div>
+                        <button
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button onclick="loadMoreCenters()"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transform hover:scale-105 transition-all duration-300">
+                    Find More Centers
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Left Section - Logo & Info -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-heartbeat text-3xl text-blue-400"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">Sehat Saathi</h3>
+                            <p class="text-sm text-gray-400">स्वास्थ्य साथी</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                        AI-powered health companion providing personalized guidance in your language. Bridging the gap
+                        between government health initiatives and citizen awareness.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-slate-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-slate-800 hover:bg-blue-400 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Middle Section - Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="ai-assistant.html"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">AI Assistant</a>
+                        </li>
+                        <li>
+                            <a href="health-hub.html"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Health Hub</a>
+                        </li>
+                        <li>
+                            <a href="schemes.html"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Government
+                                Schemes</a>
+                        </li>
+                        <li>
+                            <a href="index.html#emergency"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Emergency Guide</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Section - Support -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Support</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Help
+                                Center</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Privacy
+                                Policy</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Terms of
+                                Service</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Contact
+                                Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Bar -->
+        <div class="border-t border-slate-800">
+            <div class="container mx-auto px-4 py-6">
+                <p class="text-center text-gray-400 text-sm">
+                    © 2025 Sehat Saathi. All Rights Reserved. | Empowering Indian families with accessible healthcare
+                    guidance.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="assets/js/darkmode.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/vaccination.js"></script>
+
+    <script>
+        // Schedule Tab Functionality
+        function showSchedule(category) {
+            // Hide all schedule contents
+            document.querySelectorAll('.schedule-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Remove active class from all tabs
+            document.querySelectorAll('.schedule-tab').forEach(tab => {
+                tab.classList.remove('active', 'bg-blue-600', 'text-white');
+                tab.classList.add('bg-gray-200', 'text-gray-700');
+            });
+
+            // Show selected schedule
+            const selectedContent = document.getElementById(`schedule-${category}`);
+            if (selectedContent) {
+                selectedContent.classList.remove('hidden');
+            }
+
+            // Add active class to selected tab
+            const selectedTab = document.getElementById(`tab-${category}`);
+            if (selectedTab) {
+                selectedTab.classList.add('active', 'bg-blue-600', 'text-white');
+                selectedTab.classList.remove('bg-gray-200', 'text-gray-700');
+            }
+        }
+    </script>
+</body>
+
+</html>

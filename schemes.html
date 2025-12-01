@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Health Schemes - Sehat Saathi</title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Poppins', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 bg-white shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <i class="fas fa-heartbeat text-3xl text-blue-600"></i>
+                    <div>
+                        <span class="text-2xl font-bold text-blue-600">Sehat Saathi</span>
+                        <p class="text-xs text-gray-500">आपका डिजिटल स्वास्थ्य साथी</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Home</a>
+                    <a href="ai-assistant.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">AI
+                        Assistant</a>
+                    <a href="health-hub.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Health Hub</a>
+                    <a href="schemes.html" class="nav-link text-blue-600 font-medium text-lg">Schemes</a>
+                    <a href="vaccination-center.html"
+                        class="nav-link text-gray-700 hover:text-blue-600 transition font-medium text-lg">Vaccination
+                        Center</a>
+                    <button id="darkModeToggle" class="text-2xl hover:scale-110 transition-transform"
+                        aria-label="Toggle dark mode">🌙</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <button id="darkModeToggle" class="text-2xl hover:scale-110 transition-transform"
+                        aria-label="Toggle dark mode">🌙</button>
+                    <button id="mobileMenuBtn" class="text-gray-700">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="container mx-auto px-4 py-4 space-y-3">
+                <a href="index.html" class="block text-gray-700 hover:text-blue-600 transition font-medium">Home</a>
+                <a href="ai-assistant.html" class="block text-gray-700 hover:text-blue-600 transition font-medium">AI
+                    Assistant</a>
+                <a href="health-hub.html" class="block text-gray-700 hover:text-blue-600 transition font-medium">Health
+                    Hub</a>
+                <a href="schemes.html" class="block text-blue-600 font-medium">Schemes</a>
+                <a href="vaccination-center.html"
+                    class="block text-gray-700 hover:text-blue-600 transition font-medium">Vaccination Center</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Govt Schemes Header Banner -->
+    <section class="pt-20 pb-8 bg-gradient-to-br from-green-50 via-green-50 to-blue-50">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-2xl shadow-md p-6 mb-8">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    Government <span class="text-blue-600">Health Schemes</span>
+                </h1>
+                <p class="hindi-subtitle mb-6">सरकारी स्वास्थ्य योजनाएं</p>
+
+                <!-- Stats Row -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="stats-card">
+                        <p class="text-3xl font-bold text-blue-600">50Cr+</p>
+                        <p class="text-sm text-gray-600">Beneficiaries</p>
+                    </div>
+                    <div class="stats-card">
+                        <p class="text-3xl font-bold text-green-600">₹5 Lakh</p>
+                        <p class="text-sm text-gray-600">Coverage</p>
+                    </div>
+                    <div class="stats-card">
+                        <p class="text-3xl font-bold text-orange-600">24,000+</p>
+                        <p class="text-sm text-gray-600">Hospitals</p>
+                    </div>
+                    <div class="stats-card">
+                        <p class="text-3xl font-bold text-purple-600">100%</p>
+                        <p class="text-sm text-gray-600">Free</p>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="scrollToEligibility()"
+                        class="btn-primary bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg transform hover:scale-105 transition-all duration-300">
+                        Check Eligibility
+                    </button>
+                    <button
+                        class="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300">
+                        Browse Schemes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Major Health Insurance Schemes -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">
+                Major Health Insurance <span class="text-blue-600">Schemes</span>
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Ayushman Bharat PM-JAY -->
+                <div class="govt-card card-hover">
+                    <div class="flex items-start space-x-4 mb-4">
+                        <div class="icon-box icon-box-blue">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">Ayushman Bharat PM-JAY</h3>
+                            <p class="text-gray-600 mb-4">Pradhan Mantri Jan Arogya Yojana</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-2xl font-bold text-blue-600">₹5 Lakh</p>
+                            <p class="text-sm text-gray-600">Coverage per family</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-green-600">50Cr+</p>
+                            <p class="text-sm text-gray-600">Beneficiaries</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-600 mb-4">
+                        <i class="fas fa-hospital text-blue-600 mr-2"></i>
+                        24,000+ Empaneled Hospitals
+                    </p>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Key Benefits:</h4>
+                        <ul class="space-y-1 text-gray-600">
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Cashless treatment</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Pre & post hospitalization</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>No age limit</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>No cap on family size</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button
+                            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition">
+                            View Details
+                        </button>
+                        <button onclick="scrollToEligibility()"
+                            class="flex-1 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold transition">
+                            Check Eligibility
+                        </button>
+                    </div>
+                </div>
+
+                <!-- State Health Schemes -->
+                <div class="govt-card card-hover">
+                    <div class="flex items-start space-x-4 mb-4">
+                        <div class="icon-box icon-box-green">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">State Health Schemes</h3>
+                            <p class="text-gray-600 mb-4">State-specific health insurance programs</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-2xl font-bold text-green-600">Varies</p>
+                            <p class="text-sm text-gray-600">By State</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-blue-600">Multiple</p>
+                            <p class="text-sm text-gray-600">Schemes Available</p>
+                        </div>
+                    </div>
+
+                    <p class="text-gray-600 mb-4">
+                        <i class="fas fa-map-marker-alt text-green-600 mr-2"></i>
+                        State-specific coverage
+                    </p>
+
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-gray-800 mb-2">Key Benefits:</h4>
+                        <ul class="space-y-1 text-gray-600">
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>State-specific benefits</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Additional coverage</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Local hospital network</li>
+                            <li><i class="fas fa-check text-green-600 mr-2"></i>Easy enrollment</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button
+                            class="flex-1 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition">
+                            View Details
+                        </button>
+                        <button onclick="scrollToEligibility()"
+                            class="flex-1 border-2 border-green-600 text-green-600 hover:bg-green-50 px-6 py-3 rounded-lg font-semibold transition">
+                            Check Eligibility
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Step-by-Step Application Guide -->
+    <section class="py-16 bg-gradient-to-br from-blue-50 to-green-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">
+                Step-by-Step <span class="text-blue-600">Application Guide</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                        1</div>
+                    <h3 class="font-bold text-gray-800 mb-2">Check Eligibility</h3>
+                    <p class="text-sm text-gray-600">Verify if you qualify for the scheme</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-green-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                        2</div>
+                    <h3 class="font-bold text-gray-800 mb-2">Gather Documents</h3>
+                    <p class="text-sm text-gray-600">Collect all required documents</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                        3</div>
+                    <h3 class="font-bold text-gray-800 mb-2">Submit Application</h3>
+                    <p class="text-sm text-gray-600">Apply online or at enrollment center</p>
+                </div>
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                        4</div>
+                    <h3 class="font-bold text-gray-800 mb-2">Get Your Card</h3>
+                    <p class="text-sm text-gray-600">Receive your health card</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Required Documents Checklist -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">
+                Required <span class="text-blue-600">Documents</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Identity Documents -->
+                <div class="govt-card">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Identity Documents</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Aadhaar Card</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Voter ID Card</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">PAN Card</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Driving License</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Income & Address Proof -->
+                <div class="govt-card">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Income & Address Proof</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Ration Card</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Income Certificate</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Bank Statement</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-600"></i>
+                            <span class="text-gray-700">Utility Bill</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories Section -->
+    <section class="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">
+                Success <span class="text-blue-600">Stories</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Story 1 -->
+                <div class="success-card">
+                    <div class="flex items-start space-x-4 mb-4">
+                        <div
+                            class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            R
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-800 text-lg">Rajesh Kumar</h3>
+                            <p class="text-sm text-gray-600">Village: Sonipat, Haryana</p>
+                            <span
+                                class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold mt-2">PM-JAY</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic">
+                        "PM-JAY helped my family get free heart surgery worth ₹2.5 lakhs. We couldn't have afforded it
+                        otherwise. Thank you!"
+                    </p>
+                    <div class="flex items-center space-x-2 text-green-600">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span class="font-bold">₹2,50,000 covered</span>
+                    </div>
+                </div>
+
+                <!-- Story 2 -->
+                <div class="success-card">
+                    <div class="flex items-start space-x-4 mb-4">
+                        <div
+                            class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            P
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-800 text-lg">Priya Sharma</h3>
+                            <p class="text-sm text-gray-600">Village: Jaipur, Rajasthan</p>
+                            <span
+                                class="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold mt-2">State
+                                Scheme</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic">
+                        "The scheme covered my mother's knee replacement surgery. The process was smooth and cashless
+                        treatment was a blessing."
+                    </p>
+                    <div class="flex items-center space-x-2 text-green-600">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span class="font-bold">₹1,80,000 covered</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stats-card">
+                    <p class="text-3xl font-bold text-blue-600">2.3 Cr+</p>
+                    <p class="text-sm text-gray-600">Admissions</p>
+                </div>
+                <div class="stats-card">
+                    <p class="text-3xl font-bold text-green-600">₹60,000 Cr+</p>
+                    <p class="text-sm text-gray-600">Claims Processed</p>
+                </div>
+                <div class="stats-card">
+                    <p class="text-3xl font-bold text-orange-600">12 Cr+</p>
+                    <p class="text-sm text-gray-600">E-Cards Issued</p>
+                </div>
+                <div class="stats-card">
+                    <p class="text-3xl font-bold text-purple-600">98%</p>
+                    <p class="text-sm text-gray-600">Approval Rate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Track Application Section -->
+    <section id="eligibilitySection" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">
+                Track Your <span class="text-blue-600">Application</span>
+            </h2>
+
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-md p-8">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <input type="text" placeholder="Enter Application ID or Mobile Number"
+                            class="flex-1 border-2 border-gray-300 rounded-lg px-6 py-3 focus:outline-none focus:border-blue-500 text-lg">
+                        <button
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition">
+                            Track Status
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eligibility Checker Section -->
+    <section class="py-16 bg-gradient-to-br from-green-50 to-blue-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center">
+                Check Your <span class="text-blue-600">Eligibility</span>
+            </h2>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Form -->
+                    <div class="bg-white rounded-2xl shadow-md p-8">
+                        <form id="eligibilityForm" class="space-y-5">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Age *</label>
+                                <input type="number" id="age" min="0" max="120" required
+                                    class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Gender *</label>
+                                <select id="gender" required
+                                    class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500">
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Income Range *</label>
+                                <select id="income" required
+                                    class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500">
+                                    <option value="">Select Income Range</option>
+                                    <option value="bpl">Below Poverty Line (BPL)</option>
+                                    <option value="low">Low Income (₹0 - ₹50,000/year)</option>
+                                    <option value="medium">Medium Income (₹50,000 - ₹2,00,000/year)</option>
+                                    <option value="high">Above ₹2,00,000/year</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Location *</label>
+                                <select id="location" required
+                                    class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500">
+                                    <option value="">Select Location</option>
+                                    <option value="rural">Rural</option>
+                                    <option value="urban">Urban</option>
+                                </select>
+                            </div>
+
+                            <button type="submit"
+                                class="w-full btn-primary bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-bold shadow-lg transform hover:scale-105 transition-all duration-300">
+                                Check Eligibility
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="bg-white rounded-2xl shadow-md p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Eligible Schemes</h3>
+                        <div id="eligibilityResults" class="space-y-4">
+                            <div class="text-center py-12 text-gray-500">
+                                <i class="fas fa-info-circle text-5xl mb-4"></i>
+                                <p class="text-lg">Fill in the form to see eligible schemes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Left Section - Logo & Info -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-heartbeat text-3xl text-blue-400"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-white">Sehat Saathi</h3>
+                            <p class="text-sm text-gray-400">स्वास्थ्य साथी</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                        AI-powered health companion providing personalized guidance in your language. Bridging the gap
+                        between government health initiatives and citizen awareness.
+                    </p>
+                    <div class="flex items-center space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-slate-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-slate-800 hover:bg-blue-400 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fab fa-twitter text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Middle Section - Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="ai-assistant.html"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">AI Assistant</a>
+                        </li>
+                        <li>
+                            <a href="health-hub.html"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Health Hub</a>
+                        </li>
+                        <li>
+                            <a href="schemes.html"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Government
+                                Schemes</a>
+                        </li>
+                        <li>
+                            <a href="index.html#emergency"
+                                class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Emergency Guide</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right Section - Support -->
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Support</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Help
+                                Center</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Privacy
+                                Policy</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Terms of
+                                Service</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-300 hover:text-blue-400 transition-colors text-sm">Contact
+                                Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Bar -->
+        <div class="border-t border-slate-800">
+            <div class="container mx-auto px-4 py-6">
+                <p class="text-center text-gray-400 text-sm">
+                    © 2025 Sehat Saathi. All Rights Reserved. | Empowering Indian families with accessible healthcare
+                    guidance.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="assets/js/darkmode.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/schemes.js"></script>
+
+    <script>
+        function scrollToEligibility() {
+            document.getElementById('eligibilitySection').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

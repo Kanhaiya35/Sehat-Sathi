@@ -1,0 +1,368 @@
+/**
+ * Custom Styles for Sehat Saathi
+ * Pixel-perfect design matching screenshots
+ * Pastel backgrounds, soft gradients, rounded cards
+ */
+
+/* Pastel Color Palette */
+:root {
+    --pastel-blue: #e0f2fe;
+    --pastel-green: #dcfce7;
+    --pastel-peach: #ffe4d6;
+    --pastel-orange: #fed7aa;
+    --pastel-yellow: #fef3c7;
+    --soft-blue: #3b82f6;
+    --soft-green: #10b981;
+    --soft-orange: #f97316;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes underline {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/* Fade-in animation classes */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.fade-in-visible {
+    opacity: 1;
+}
+
+/* Smooth transitions */
+* {
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #10b981;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #059669;
+}
+
+/* Chat message animations */
+.message-bubble {
+    animation: fadeInUp 0.3s ease-out;
+}
+
+/* Scheme result card animation */
+.scheme-result-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Gradient text */
+.gradient-text {
+    background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dark .gradient-text {
+    background: linear-gradient(135deg, #60a5fa 0%, #34d399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Button hover effects */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Card hover effects */
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Typing indicator animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+/* Mobile menu animation */
+.mobile-menu-enter {
+    animation: slideInRight 0.3s ease-out;
+}
+
+/* Loading spinner */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.dark *:focus-visible {
+    outline-color: #60a5fa;
+}
+
+/* Navbar hover underline animation */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #3b82f6;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Pastel background utilities */
+.bg-pastel-blue {
+    background-color: var(--pastel-blue);
+}
+
+.bg-pastel-green {
+    background-color: var(--pastel-green);
+}
+
+.bg-pastel-peach {
+    background-color: var(--pastel-peach);
+}
+
+.bg-pastel-orange {
+    background-color: var(--pastel-orange);
+}
+
+.bg-pastel-yellow {
+    background-color: var(--pastel-yellow);
+}
+
+/* Icon boxes - 40-60px, rounded-xl, pastel */
+.icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.icon-box-blue {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+.icon-box-green {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.icon-box-orange {
+    background-color: #fed7aa;
+    color: #ea580c;
+}
+
+.icon-box-yellow {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.icon-box-pink {
+    background-color: #fce7f3;
+    color: #be185d;
+}
+
+.icon-box-red {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* Alert banner styles */
+.alert-banner {
+    background: linear-gradient(135deg, #ffe4d6 0%, #fed7aa 100%);
+    border-left: 4px solid #f97316;
+}
+
+/* Hindi subtitle style */
+.hindi-subtitle {
+    font-size: 0.875rem;
+    color: #64748b;
+    font-weight: 400;
+}
+
+/* Government portal card style */
+.govt-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Stats card style */
+.stats-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Success story card */
+.success-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.success-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Warning box (yellow) */
+.warning-box {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+/* Chat bubble styles */
+.chat-bubble-bot {
+    background: #f1f5f9;
+    border-radius: 1rem;
+    border-top-left-radius: 0.25rem;
+}
+
+.chat-bubble-user {
+    background: #3b82f6;
+    color: white;
+    border-radius: 1rem;
+    border-top-right-radius: 0.25rem;
+}
+
+/* Print styles */
+@media print {
+    nav,
+    footer,
+    .no-print {
+        display: none;
+    }
+}
+
