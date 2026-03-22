@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vaccination Centres – Sehat Sathi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/custom.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { primary: { 50:'#ecfdf5',100:'#d1fae5',500:'#10b981',600:'#059669',700:'#047857' } },
+          fontFamily: { sans: ['Inter','sans-serif'] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans bg-gray-50 dark:bg-gray-900 dark:text-gray-100 transition-colors">
+
+  <!-- ── Navbar ──────────────────────────────────────────────────────── -->
+  <nav class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-40 border-b border-gray-100 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 flex-shrink-0">
+        <svg class="w-9 h-9 text-primary-600" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="10" fill="currentColor" fill-opacity="0.15"/>
+          <rect x="17" y="8" width="6" height="24" rx="3" fill="currentColor"/>
+          <rect x="8" y="17" width="24" height="6" rx="3" fill="currentColor"/>
+        </svg>
+        <div>
+          <div class="font-bold text-primary-700 dark:text-primary-400">Sehat Sathi</div>
+          <div class="text-xs text-gray-400">स्वास्थ्य साथी</div>
+        </div>
+      </a>
+
+      <!-- Desktop Links -->
+      <div class="hidden md:flex items-center gap-5 text-sm font-medium">
+        <a href="/"                 class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400" data-translate="nav_home">Home</a>
+        <a href="/health.html"      class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400" data-translate="nav_health">Health &amp; Schemes</a>
+        <a href="/vaccination.html" class="text-primary-600 dark:text-primary-400 font-semibold"                               data-translate="nav_vaccination">Vaccination</a>
+        <a href="/chatbot.html"     class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400" data-translate="nav_chatbot">AI Chatbot</a>
+      </div>
+
+      <!-- Right Controls -->
+      <div class="flex items-center gap-2">
+        <div id="navAuthV" class="flex items-center gap-2">
+          <a href="/login.html" class="text-sm px-3 py-1.5 border border-primary-400 text-primary-600 dark:text-primary-400 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/30" data-translate="nav_login">Login</a>
+        </div>
+        <div id="navUserV" class="hidden items-center gap-2">
+          <span id="navUserNameV" class="text-sm text-gray-700 dark:text-gray-200 font-medium hidden md:block"></span>
+          <button onclick="logout()" class="text-xs px-3 py-1.5 text-red-600 border border-red-300 rounded-lg hover:bg-red-50" data-translate="btn_logout">Logout</button>
+        </div>
+        <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" title="Toggle dark mode">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+        <select onchange="setLanguage(this.value)" class="text-xs border border-gray-200 dark:border-gray-600 rounded-lg px-2 py-1.5 bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 outline-none">
+          <option value="en">EN</option>
+          <option value="hi">हि</option>
+          <option value="mr">मर</option>
+          <option value="ta">த</option>
+          <option value="bn">বাং</option>
+        </select>
+        <button onclick="document.getElementById('mobMenuV').classList.toggle('hidden')" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+          <svg class="w-5 h-5 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobMenuV" class="hidden md:hidden border-t border-gray-100 dark:border-gray-700 px-4 py-3 space-y-2 text-sm font-medium bg-white dark:bg-gray-800">
+      <a href="/"                 class="flex items-center gap-2 py-1.5 text-gray-600 dark:text-gray-300">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span data-translate="nav_home">Home</span>
+      </a>
+      <a href="/health.html"      class="flex items-center gap-2 py-1.5 text-gray-600 dark:text-gray-300">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        <span data-translate="nav_health">Health &amp; Schemes</span>
+      </a>
+      <a href="/vaccination.html" class="flex items-center gap-2 py-1.5 text-primary-600 dark:text-primary-400 font-semibold">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <span data-translate="nav_vaccination">Vaccination</span>
+      </a>
+      <a href="/chatbot.html"     class="flex items-center gap-2 py-1.5 text-gray-600 dark:text-gray-300">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+        <span data-translate="nav_chatbot">AI Chatbot</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── Outbreak Alert Banner ─────────────────────────────────────── -->
+  <div id="alertBannerV" class="hidden text-white text-center py-2.5 px-4 text-sm font-medium relative">
+    <span id="alertTextV"></span>
+    <button onclick="this.parentElement.classList.add('hidden')" class="absolute right-4 top-1/2 -translate-y-1/2 opacity-70 hover:opacity-100 text-lg">✕</button>
+  </div>
+
+  <!-- ── Page Header ────────────────────────────────────────────────── -->
+  <header class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-12 px-4">
+    <div class="max-w-7xl mx-auto flex items-center gap-4">
+      <div class="w-16 h-16 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center flex-shrink-0">
+        <svg class="w-9 h-9 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-3xl md:text-5xl font-extrabold mb-1" data-translate="vac_title">Vaccination Centre Finder</h1>
+        <p class="text-blue-100 text-lg" data-translate="vac_sub">Find nearest vaccination centres &amp; complete NIS schedule</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Auth Guard ────────────────────────────────────────────────── -->
+  <div id="authGuardV" class="hidden max-w-3xl mx-auto px-4 py-20 text-center">
+    <div class="flex justify-center mb-5">
+      <div class="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+        <svg class="w-10 h-10 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+        </svg>
+      </div>
+    </div>
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-3" data-translate="login_required">Login Required</h2>
+    <p class="text-gray-500 dark:text-gray-400 mb-6" data-translate="vac_login_msg">Login to find vaccination centres near you and access your vaccination reminders.</p>
+    <div class="flex gap-3 justify-center">
+      <a href="/login.html?redirect=/vaccination.html" class="px-6 py-3 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700" data-translate="btn_login">Login</a>
+      <a href="/register.html"                         class="px-6 py-3 border border-primary-500 text-primary-600 font-bold rounded-xl hover:bg-primary-50" data-translate="btn_signup">Sign Up Free</a>
+    </div>
+  </div>
+
+  <!-- ── Main Content ───────────────────────────────────────────────── -->
+  <main id="mainContentV" class="hidden max-w-7xl mx-auto px-4 py-10">
+
+    <!-- Search Bar -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 mb-8">
+      <h2 class="font-bold text-xl text-gray-800 dark:text-white mb-4 flex items-center gap-2">
+        <svg class="w-5 h-5 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+        </svg>
+        <span data-translate="vac_search">Find Vaccination Centres Near You</span>
+      </h2>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <input id="locationInput" type="text"
+          data-translate-placeholder="vac_input_placeholder"
+          placeholder="Enter your city, district or pin code (e.g. Pune, Maharashtra)"
+          class="flex-1 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-primary-500 outline-none text-sm">
+        <select id="centreTypeFilter" class="px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-primary-500 outline-none">
+          <option value="" data-translate="vac_all_types">All Types</option>
+          <option value="PHC">PHC (Primary Health Centre)</option>
+          <option value="CHC">CHC (Community Health Centre)</option>
+          <option value="Sub-Centre">Sub-Centre</option>
+          <option value="District Hospital">District Hospital</option>
+          <option value="UHP">Urban Health Post</option>
+        </select>
+        <button onclick="searchCentres()" class="flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700 transition-all whitespace-nowrap">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z"/>
+          </svg>
+          <span data-translate="search">Search</span>
+        </button>
+      </div>
+      <p class="text-xs text-gray-400 mt-2" data-translate="vac_map_hint">Showing nearby vaccination centres using Google Maps.</p>
+    </div>
+
+    <!-- Two-column grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- Left: Centre Cards -->
+      <div class="lg:col-span-2">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-gray-800 dark:text-white flex items-center gap-1">
+            <span data-translate="vac_centres_heading">Vaccination Centres</span>
+            <span id="centreCount" class="text-primary-600 ml-1 text-sm font-normal"></span>
+          </h3>
+          <button onclick="loadCentres()" class="text-sm text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <span data-translate="refresh">Refresh</span>
+          </button>
+        </div>
+        <div id="centresList" class="space-y-4">
+          <div class="text-center py-12 text-gray-400">
+            <div class="flex justify-center mb-3">
+              <svg class="w-12 h-12 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+              </svg>
+            </div>
+            <p class="text-sm" data-translate="vac_empty">Enter a location or click Search to find centres.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Sidebar -->
+      <div class="space-y-6">
+
+        <!-- Map -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm">
+          <div class="relative">
+            <div id="map" class="h-64 w-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+              <div class="text-center text-gray-400">
+                <svg class="w-10 h-10 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"/>
+                </svg>
+                <p class="text-xs" data-translate="vac_map_loads">Map loads after search</p>
+              </div>
+            </div>
+            <div class="absolute top-2 right-2 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs px-2 py-1 rounded-full font-medium" data-translate="vac_map_view">Map View</div>
+          </div>
+        </div>
+
+        <!-- Outbreak Alerts -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+          <h4 class="font-bold text-gray-800 dark:text-white mb-3 flex items-center gap-2">
+            <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse flex-shrink-0"></span>
+            <span data-translate="vac_outbreak_heading">Active Outbreak Alerts</span>
+          </h4>
+          <div id="outbreakAlerts" class="space-y-2 text-sm">
+            <p class="text-gray-400 text-xs flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 animate-spin flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+              <span data-translate="loading">Loading...</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Vaccination Reminder -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-5 border border-blue-100 dark:border-blue-800">
+          <h4 class="font-bold text-blue-800 dark:text-blue-300 mb-3 flex items-center gap-2">
+            <svg class="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+            </svg>
+            <span data-translate="vac_reminder_heading">Vaccination Reminder</span>
+          </h4>
+          <div class="space-y-3">
+            <div>
+              <label class="text-xs font-medium text-gray-600 dark:text-gray-400 block mb-1" data-translate="vac_dob_label">Child's Date of Birth</label>
+              <input id="childDob" type="date" class="w-full px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-primary-500 outline-none">
+            </div>
+            <button onclick="calculateReminder()" class="w-full py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 text-sm transition-all flex items-center justify-center gap-2">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span data-translate="vac_calc_btn">Calculate Next Vaccine</span>
+            </button>
+          </div>
+          <div id="reminderResult" class="hidden mt-3 text-xs text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40 rounded-lg p-3"></div>
+        </div>
+
+      </div>
+      <!-- /Sidebar -->
+
+    </div>
+    <!-- /Grid -->
+
+    <!-- NIS Table -->
+    <div class="mt-10">
+      <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
+        <svg class="w-6 h-6 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/>
+        </svg>
+        <span data-translate="vac_schedule">National Immunization Schedule (NIS)</span>
+      </h2>
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-primary-600 text-white">
+                <th class="px-4 py-3 text-left font-semibold" data-translate="vac_col_age">Age</th>
+                <th class="px-4 py-3 text-left font-semibold" data-translate="vac_col_vaccines">Vaccines</th>
+                <th class="px-4 py-3 text-left font-semibold hidden sm:table-cell" data-translate="vac_col_note">Note</th>
+                <th class="px-4 py-3 text-left font-semibold" data-translate="vac_col_status">Status</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleTableBody" class="divide-y divide-gray-100 dark:divide-gray-700">
+              <tr>
+                <td colspan="4" class="px-4 py-8 text-center text-gray-400">
+                  <svg class="w-8 h-8 mx-auto mb-2 text-gray-300 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                  </svg>
+                  <span data-translate="loading">Loading...</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="text-xs text-gray-400 mt-2" data-translate="vac_source">Source: Ministry of Health &amp; Family Welfare, Government of India | Last updated: 2024</p>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────── -->
+  <footer class="bg-gray-900 text-gray-400 py-8 px-4 mt-10">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <svg class="w-7 h-7 text-primary-400" viewBox="0 0 40 40" fill="none">
+              <rect width="40" height="40" rx="10" fill="currentColor" fill-opacity="0.2"/>
+              <rect x="17" y="8" width="6" height="24" rx="3" fill="currentColor"/>
+              <rect x="8" y="17" width="24" height="6" rx="3" fill="currentColor"/>
+            </svg>
+            <span class="text-white font-bold text-lg">Sehat Sathi</span>
+          </div>
+          <p class="text-sm" data-translate="footer_brand_desc">AI healthcare companion for rural India. Free, multilingual, accessible.</p>
+          <p class="text-xs mt-2 text-gray-500" data-translate="vac_footer_note">Free vaccination at all Govt. PHC/CHC. Contact ASHA/ANM worker in your area.</p>
+        </div>
+
+        <!-- Emergency Helplines -->
+        <div>
+          <h4 class="font-semibold text-white mb-3" data-translate="footer_helplines">Emergency Helplines</h4>
+          <div class="space-y-1.5 text-sm">
+            <p><a href="tel:108"   class="hover:text-white transition-colors flex items-center gap-2"><svg class="w-3.5 h-3.5 text-red-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><span data-translate="footer_108">108 – Ambulance</span></a></p>
+            <p><a href="tel:102"   class="hover:text-white transition-colors flex items-center gap-2"><svg class="w-3.5 h-3.5 text-pink-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><span data-translate="footer_102">102 – Mother &amp; Child</span></a></p>
+            <p><a href="tel:181"   class="hover:text-white transition-colors flex items-center gap-2"><svg class="w-3.5 h-3.5 text-purple-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><span data-translate="footer_181">181 – Women Helpline</span></a></p>
+            <p><a href="tel:1098"  class="hover:text-white transition-colors flex items-center gap-2"><svg class="w-3.5 h-3.5 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><span data-translate="footer_1098">1098 – Child Helpline</span></a></p>
+            <p><a href="tel:14555" class="hover:text-white transition-colors flex items-center gap-2"><svg class="w-3.5 h-3.5 text-green-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg><span data-translate="footer_14555">14555 – PM-JAY</span></a></p>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-semibold text-white mb-3" data-translate="footer_quicklinks">Quick Links</h4>
+          <div class="space-y-1.5 text-sm">
+            <p><a href="/"                 class="hover:text-white transition-colors" data-translate="nav_home">Home</a></p>
+            <p><a href="/chatbot.html"     class="hover:text-white transition-colors" data-translate="footer_link_chatbot">AI Chatbot</a></p>
+            <p><a href="/health.html"      class="hover:text-white transition-colors" data-translate="nav_health">Health &amp; Schemes</a></p>
+            <p><a href="/login.html"       class="hover:text-white transition-colors" data-translate="footer_login_register">Login / Register</a></p>
+          </div>
+        </div>
+
+      </div>
+      <div class="border-t border-gray-800 pt-5 text-center text-xs text-gray-500 space-y-1">
+        <p data-translate="footer_disclaimer">Sehat Sathi provides health information for awareness only. Always consult a qualified doctor for medical advice and diagnosis.</p>
+        <p data-translate="footer_copyright">© 2025 Sehat Sathi. Made with care for India | Version 1.0</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/lang/en.js"></script>
+  <script src="/js/lang/hi.js"></script>
+  <script src="/js/lang/mr.js"></script>
+  <script src="/js/lang/ta.js"></script>
+  <script src="/js/lang/bn.js"></script>
+  <script src="/js/translate.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/vaccination.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=<your-api-key>&libraries=places"></script>
+</body>
+</html>

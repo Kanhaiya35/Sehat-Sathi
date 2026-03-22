@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – Sehat Sathi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/custom.css">
+  <script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:{50:'#ecfdf5',500:'#10b981',600:'#059669',700:'#047857'}},fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+</head>
+<body class="font-sans bg-gray-100 dark:bg-gray-900 dark:text-gray-100 transition-colors">
+
+  <!-- Auth Guard Overlay -->
+  <div id="adminGuard" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50">
+    <div class="text-center p-8 max-w-md">
+      <div class="text-7xl mb-4" id="guardIcon">⏳</div>
+      <h2 id="guardTitle" class="text-2xl font-bold text-gray-800 dark:text-white mb-3">Verifying Access...</h2>
+      <p id="guardMsg" class="text-gray-500 dark:text-gray-400 mb-6">Checking admin privileges</p>
+      <div id="guardLinks" class="hidden flex gap-3 justify-center">
+        <a href="/login.html?redirect=/admin.html" class="px-6 py-3 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700">Login</a>
+        <a href="/" class="px-6 py-3 border border-gray-300 text-gray-600 font-bold rounded-xl hover:bg-gray-50">Home</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Admin Layout -->
+  <div id="adminLayout" class="hidden min-h-screen flex">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-gray-300 flex flex-col flex-shrink-0 fixed h-full z-40 hidden lg:flex">
+      <div class="p-5 border-b border-gray-700">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-2xl">🏥</span>
+          <span class="font-bold text-white">Sehat Sathi</span>
+        </div>
+        <p class="text-xs text-gray-500">Admin Dashboard</p>
+      </div>
+      <nav class="flex-1 p-4 space-y-1">
+        <button onclick="showSection('overview')" id="nav-overview" class="admin-nav-btn active-nav w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-left">
+          <span>📊</span> Overview
+        </button>
+        <button onclick="showSection('users')" id="nav-users" class="admin-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-left hover:bg-gray-700 text-gray-400">
+          <span>👥</span> Users
+        </button>
+        <button onclick="showSection('queries')" id="nav-queries" class="admin-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-left hover:bg-gray-700 text-gray-400">
+          <span>💬</span> Chat Queries
+        </button>
+        <button onclick="showSection('alerts')" id="nav-alerts" class="admin-nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-left hover:bg-gray-700 text-gray-400">
+          <span>⚠️</span> Outbreak Alerts
+        </button>
+      </nav>
+      <div class="p-4 border-t border-gray-700">
+        <div class="text-xs text-gray-500 mb-2">Logged in as admin</div>
+        <button onclick="logout()" class="w-full py-2 text-xs text-red-400 border border-red-800 rounded-lg hover:bg-red-900/30">Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 lg:ml-64 flex flex-col">
+
+      <!-- Top Bar -->
+      <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+        <div>
+          <h1 class="font-bold text-gray-800 dark:text-white text-xl" id="sectionTitle">Overview</h1>
+          <p class="text-xs text-gray-400" id="sectionSubtitle">Platform Statistics</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">🌙</button>
+          <span class="text-sm text-gray-600 dark:text-gray-300 font-medium" id="adminName"></span>
+          <!-- Mobile menu button -->
+          <button onclick="document.getElementById('mobileSidebar').classList.toggle('hidden')" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">☰</button>
+        </div>
+      </header>
+
+      <!-- Mobile Sidebar Overlay -->
+      <div id="mobileSidebar" class="hidden lg:hidden fixed inset-0 bg-black/50 z-50" onclick="this.classList.add('hidden')">
+        <div class="w-64 h-full bg-gray-900 p-4" onclick="event.stopPropagation()">
+          <button onclick="showSection('overview');document.getElementById('mobileSidebar').classList.add('hidden')" class="w-full flex items-center gap-3 px-3 py-2.5 text-gray-300 rounded-lg hover:bg-gray-700 text-sm">📊 Overview</button>
+          <button onclick="showSection('users');document.getElementById('mobileSidebar').classList.add('hidden')"   class="w-full flex items-center gap-3 px-3 py-2.5 text-gray-300 rounded-lg hover:bg-gray-700 text-sm">👥 Users</button>
+          <button onclick="showSection('queries');document.getElementById('mobileSidebar').classList.add('hidden')" class="w-full flex items-center gap-3 px-3 py-2.5 text-gray-300 rounded-lg hover:bg-gray-700 text-sm">💬 Chat Queries</button>
+          <button onclick="showSection('alerts');document.getElementById('mobileSidebar').classList.add('hidden')"  class="w-full flex items-center gap-3 px-3 py-2.5 text-gray-300 rounded-lg hover:bg-gray-700 text-sm">⚠️ Outbreak Alerts</button>
+        </div>
+      </div>
+
+      <!-- Sections Container -->
+      <div class="flex-1 p-6 overflow-y-auto">
+
+        <!-- ── OVERVIEW ──────────────────────────────────────────────────── -->
+        <section id="sec-overview">
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+              <div class="flex items-center justify-between mb-2"><span class="text-2xl">👥</span><span class="text-xs text-green-500 font-medium">+12%</span></div>
+              <div id="stat-users" class="text-3xl font-extrabold text-gray-800 dark:text-white">--</div>
+              <p class="text-xs text-gray-400 mt-1">Total Users</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+              <div class="flex items-center justify-between mb-2"><span class="text-2xl">💬</span><span class="text-xs text-blue-500 font-medium">Active</span></div>
+              <div id="stat-chats" class="text-3xl font-extrabold text-gray-800 dark:text-white">--</div>
+              <p class="text-xs text-gray-400 mt-1">Chat Sessions</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+              <div class="flex items-center justify-between mb-2"><span class="text-2xl">📨</span><span class="text-xs text-purple-500 font-medium">Total</span></div>
+              <div id="stat-msgs" class="text-3xl font-extrabold text-gray-800 dark:text-white">--</div>
+              <p class="text-xs text-gray-400 mt-1">AI Messages</p>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+              <div class="flex items-center justify-between mb-2"><span class="text-2xl">⚠️</span><span class="text-xs text-red-500 font-medium">Live</span></div>
+              <div id="stat-alerts" class="text-3xl font-extrabold text-gray-800 dark:text-white">--</div>
+              <p class="text-xs text-gray-400 mt-1">Active Alerts</p>
+            </div>
+          </div>
+
+          <!-- Language Distribution + Recent Users -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+              <h3 class="font-bold text-gray-800 dark:text-white mb-4">🌐 Language Distribution</h3>
+              <div id="langDistribution" class="space-y-3">
+                <p class="text-sm text-gray-400">Loading...</p>
+              </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+              <h3 class="font-bold text-gray-800 dark:text-white mb-4">🆕 Recent Registrations</h3>
+              <div id="recentUsers" class="space-y-2">
+                <p class="text-sm text-gray-400">Loading...</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── USERS ─────────────────────────────────────────────────────── -->
+        <section id="sec-users" class="hidden">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="font-bold text-xl text-gray-800 dark:text-white">User Management</h2>
+            <div class="flex gap-2">
+              <input id="userSearch" type="text" placeholder="Search by name or email..."
+                class="px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-primary-500 outline-none"
+                oninput="debounceSearch(this.value)">
+            </div>
+          </div>
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-gray-50 dark:bg-gray-700 border-b border-gray-100 dark:border-gray-600">
+                  <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">User</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide hidden sm:table-cell">Language</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Role</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Status</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide hidden md:table-cell">Joined</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTableBody" class="divide-y divide-gray-100 dark:divide-gray-700">
+                  <tr><td colspan="6" class="px-4 py-8 text-center text-gray-400 text-sm">Loading users...</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination -->
+            <div class="px-4 py-3 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+              <span id="usersPageInfo">Page 1</span>
+              <div class="flex gap-2">
+                <button id="prevPageBtn" onclick="changePage(-1)" class="px-3 py-1.5 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-40" disabled>← Prev</button>
+                <button id="nextPageBtn" onclick="changePage(1)"  class="px-3 py-1.5 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">Next →</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── CHAT QUERIES ──────────────────────────────────────────────── -->
+        <section id="sec-queries" class="hidden">
+          <h2 class="font-bold text-xl text-gray-800 dark:text-white mb-6">Most Active Chat Sessions</h2>
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-gray-50 dark:bg-gray-700 border-b border-gray-100 dark:border-gray-600">
+                  <tr>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">User</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Messages</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Provider</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase hidden sm:table-cell">Language</th>
+                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase hidden md:table-cell">Date</th>
+                  </tr>
+                </thead>
+                <tbody id="queriesTableBody" class="divide-y divide-gray-100 dark:divide-gray-700">
+                  <tr><td colspan="5" class="px-4 py-8 text-center text-gray-400">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ── OUTBREAK ALERTS ───────────────────────────────────────────── -->
+        <section id="sec-alerts" class="hidden">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Create Alert Form -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+              <h3 class="font-bold text-xl text-gray-800 dark:text-white mb-5">🚨 Create Outbreak Alert</h3>
+              <div id="alertFormMsg" class="hidden mb-4 p-3 rounded-xl text-sm"></div>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Alert Title *</label>
+                  <input id="alertTitle" type="text" placeholder="e.g. Dengue Outbreak Alert – Pune District"
+                    class="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-primary-500 outline-none">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Alert Message *</label>
+                  <textarea id="alertMessage" rows="3" placeholder="Provide details about the outbreak, affected areas, and preventive measures..."
+                    class="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-primary-500 outline-none resize-none"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Severity</label>
+                    <select id="alertSeverity" class="w-full px-3 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-primary-500">
+                      <option value="low">🟢 Low</option>
+                      <option value="medium" selected>🟡 Medium</option>
+                      <option value="high">🟠 High</option>
+                      <option value="critical">🔴 Critical</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Region *</label>
+                    <input id="alertRegion" type="text" placeholder="e.g. Pune, Maharashtra"
+                      class="w-full px-3 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-primary-500 outline-none">
+                  </div>
+                </div>
+                <button onclick="createAlert()" class="w-full py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all flex items-center justify-center gap-2">
+                  <span id="alertBtnText">🚨 Publish Alert</span>
+                  <span id="alertBtnSpinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Existing Alerts List -->
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-xl text-gray-800 dark:text-white">All Alerts</h3>
+                <button onclick="loadAlerts()" class="text-sm text-primary-600 dark:text-primary-400 hover:underline">Refresh</button>
+              </div>
+              <div id="alertsList" class="space-y-3 max-h-[600px] overflow-y-auto">
+                <p class="text-sm text-gray-400">Loading alerts...</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/lang/en.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

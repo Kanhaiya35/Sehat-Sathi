@@ -1,0 +1,103 @@
+/* ── Sehat Sathi Custom Styles ────────────────────────────────────────────── */
+
+/* Base transitions */
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-slow {
+  0%,100% { opacity: 1; }
+  50%      { opacity: .5; }
+}
+
+.animate-fadeIn { animation: fadeIn 0.3s ease forwards; }
+.animate-slideUp { animation: slideUp 0.4s ease forwards; }
+.animate-pulse-slow { animation: pulse-slow 2s ease infinite; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+.dark ::-webkit-scrollbar-thumb { background: #4b5563; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* Chat bubbles */
+.chat-bubble-user {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: #fff;
+  border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
+}
+.chat-bubble-bot {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+}
+.dark .chat-bubble-bot {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+/* Typing indicator */
+.typing-dot {
+  width: 7px; height: 7px;
+  background: #9ca3af;
+  border-radius: 50%;
+  animation: typing 1.2s ease infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Admin sidebar active */
+.active-nav {
+  background: rgba(16,185,129,0.15);
+  color: #10b981 !important;
+}
+
+/* Tab active */
+.active-tab {
+  background: #fff;
+  color: #047857;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* Severity badge */
+.severity-low      { background:#d1fae5; color:#065f46; }
+.severity-medium   { background:#fef9c3; color:#713f12; }
+.severity-high     { background:#fee2e2; color:#7f1d1d; }
+.severity-critical { background:#fca5a5; color:#7f1d1d; animation: pulse-slow 1.5s ease infinite; }
+.dark .severity-low      { background:#064e3b; color:#6ee7b7; }
+.dark .severity-medium   { background:#451a03; color:#fde68a; }
+.dark .severity-high     { background:#450a0a; color:#fca5a5; }
+.dark .severity-critical { background:#7f1d1d; color:#fecaca; }
+
+/* Disease card hover */
+.disease-card:hover { transform: translateY(-2px); }
+
+/* Focus visible */
+*:focus-visible {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Print */
+@media print {
+  nav, footer, button, .fixed { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+}
