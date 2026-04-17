@@ -86,7 +86,7 @@ const HEALTH_DATA = {
       { name: 'RBSK – Child Health Screening', sub: 'Rashtriya Bal Swasthya Karyakram', desc: 'Free health screening for 0–18 years. 4D defects covered. Free treatment up to ₹1 lakh via DEIC.', extra: ['✅ School & Anganwadi screening','✅ Free corrective surgeries included'], color: 'amber' }
     ],
 
-    eligibility_title:  'PM-JAY Eligibility Checker',
+    eligibility_title:  'Scheme Finder',
     eligibility_sub:    'Based on SECC 2011 criteria. Check if your family qualifies for ₹5 lakh health coverage.',
     el_income_label:    'Annual Family Income',
     el_income_opt:      ['Select income range','Below ₹1 Lakh per year','₹1 – ₹2.5 Lakh per year','Above ₹2.5 Lakh per year'],
@@ -96,6 +96,8 @@ const HEALTH_DATA = {
     el_ration_opt:      ['Select type','Antyodaya (AAY) – Poorest of poor','BPL – Below Poverty Line','APL – Above Poverty Line','No Ration Card'],
     el_occ_label:       'Occupation / Livelihood',
     el_occ_opt:         ['Select occupation','Daily wage agricultural labourer','Manual scavenger','Primitive tribal group','Legally released bonded labourer','Construction / brick kiln worker','Domestic worker / household help','Rag picker / street vendor','Salaried / Business / Other'],
+    el_state_label:      'State/Union Territory',
+    el_state_opt:        ['Select state/UT','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman & Nicobar Islands','Chandigarh','Dadra & Nagar Haveli and Daman & Diu','Delhi','Jammu & Kashmir','Ladakh','Lakshadweep','Puducherry'],
     el_check_btn:       'Check My Eligibility →',
     helpline_label:     'Helpline',
   },
@@ -179,7 +181,7 @@ const HEALTH_DATA = {
       { name: 'RBSK – बाल स्वास्थ्य',   sub: 'राष्ट्रीय बाल स्वास्थ्य कार्यक्रम', desc: '0–18 वर्ष के लिए मुफ्त स्वास्थ्य जांच। DEIC के माध्यम से ₹1 लाख तक मुफ्त इलाज।', extra: ['✅ स्कूल और आंगनवाड़ी स्क्रीनिंग','✅ मुफ्त सुधारात्मक सर्जरी शामिल'], color: 'amber' }
     ],
 
-    eligibility_title: 'PM-JAY पात्रता जांचकर्ता',
+    eligibility_title: 'योजना खोजें',
     eligibility_sub:   'SECC 2011 मानदंडों के आधार पर। जांचें कि क्या आपका परिवार ₹5 लाख स्वास्थ्य कवरेज के लिए योग्य है।',
     el_income_label:   'वार्षिक पारिवारिक आय',
     el_income_opt:     ['आय सीमा चुनें','₹1 लाख प्रति वर्ष से कम','₹1 – ₹2.5 लाख प्रति वर्ष','₹2.5 लाख प्रति वर्ष से अधिक'],
@@ -189,6 +191,8 @@ const HEALTH_DATA = {
     el_ration_opt:     ['प्रकार चुनें','अंत्योदय (AAY) – सबसे गरीब','BPL – गरीबी रेखा से नीचे','APL – गरीबी रेखा से ऊपर','कोई राशन कार्ड नहीं'],
     el_occ_label:      'व्यवसाय / आजीविका',
     el_occ_opt:        ['व्यवसाय चुनें','दैनिक मजदूर कृषि मजदूर','हाथ से मैला ढोने वाला','आदिम जनजातीय समूह','कानूनी रूप से मुक्त बंधुआ मजदूर','निर्माण / ईंट-भट्ठा मजदूर','घरेलू कामगार / घर में सहायक','कूड़ा बीनने वाला / रेहड़ी-पटरी वाला','वेतनभोगी / व्यवसाय / अन्य'],
+     el_state_label:      'State/Union Territory',
+    el_state_opt:        ['Select state/UT','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman & Nicobar Islands','Chandigarh','Dadra & Nagar Haveli and Daman & Diu','Delhi','Jammu & Kashmir','Ladakh','Lakshadweep','Puducherry'],
     el_check_btn:      'मेरी पात्रता जांचें →',
     helpline_label:    'हेल्पलाइन',
   },
@@ -253,11 +257,12 @@ const HEALTH_DATA = {
       { name:'RBSK – बाल आरोग्य तपासणी', sub:'राष्ट्रीय बाल स्वास्थ्य कार्यक्रम', desc:'0–18 वयोगटासाठी मोफत आरोग्य तपासणी. DEIC द्वारे ₹1 लाखापर्यंत मोफत उपचार.', extra:['✅ शाळा आणि अंगणवाडी स्क्रीनिंग','✅ मोफत सुधारात्मक शस्त्रक्रिया समाविष्ट'], color:'amber' }
     ],
 
-    eligibility_title:'PM-JAY पात्रता तपासक', eligibility_sub:'SECC 2011 निकषांवर आधारित. तुमचे कुटुंब ₹5 लाख आरोग्य कव्हरेजसाठी पात्र आहे का ते तपासा.',
+    eligibility_title:'योजना शोधक', eligibility_sub:'SECC 2011 निकषांवर आधारित. तुमचे कुटुंब ₹5 लाख आरोग्य कव्हरेजसाठी पात्र आहे का ते तपासा.',
     el_income_label:'वार्षिक कौटुंबिक उत्पन्न', el_income_opt:['उत्पन्न श्रेणी निवडा','₹1 लाख प्रतिवर्षापेक्षा कमी','₹1 – ₹2.5 लाख प्रतिवर्ष','₹2.5 लाखपेक्षा जास्त'],
     el_caste_label:'जाती प्रवर्ग', el_caste_opt:['प्रवर्ग निवडा','SC – अनुसूचित जाती','ST – अनुसूचित जमाती','OBC – इतर मागास वर्ग','सामान्य'],
     el_ration_label:'रेशन कार्ड प्रकार', el_ration_opt:['प्रकार निवडा','अंत्योदय (AAY)','BPL – दारिद्र्यरेषेखाली','APL – दारिद्र्यरेषेवर','रेशन कार्ड नाही'],
     el_occ_label:'व्यवसाय / उपजीविका', el_occ_opt:['व्यवसाय निवडा','दैनिक मजुरी शेतमजूर','हाताने मैला साफ करणारा','आदिम जमाती समूह','बंधमुक्त कामगार','बांधकाम / विटभट्टी कामगार','घरकाम करणारा','कचरा गोळा करणारा / फेरीवाला','पगारदार / व्यवसाय / इतर'],
+    el_state_label:'State/Union Territory', el_state_opt:['Select state/UT','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman & Nicobar Islands','Chandigarh','Dadra & Nagar Haveli and Daman & Diu','Delhi','Jammu & Kashmir','Ladakh','Lakshadweep','Puducherry'],
     el_check_btn:'माझी पात्रता तपासा →', helpline_label:'हेल्पलाइन',
   },
 
@@ -314,11 +319,13 @@ const HEALTH_DATA = {
       { name:'NPCDCS (NCD திட்டம்)', sub:'தொற்றா நோய்கள் கட்டுப்பாடு', desc:'மாவட்ட மருத்துவமனைகளில் நீரிழிவு, உயர் இரத்த அழுத்தம், புற்றுநோய் இலவச திரையிடல் & சிகிச்சை.', helpline:'1800-180-1104', color:'purple' },
       { name:'RBSK – குழந்தை சுகாதார திரையிடல்', sub:'ராஷ்ட்ரிய பால் சுவாஸ்த்ய காரியக்ரம்', desc:'0–18 வயதிற்கு இலவச சுகாதார திரையிடல். DEIC மூலம் ₹1 லட்சம் வரை இலவச சிகிச்சை.', extra:['✅ பள்ளி & அங்கன்வாடி திரையிடல்','✅ இலவச திருத்திய அறுவை சிகிச்சைகள் சேர்க்கப்பட்டுள்ளன'], color:'amber' }
     ],
-    eligibility_title:'PM-JAY தகுதி சோதிப்பான்', eligibility_sub:'SECC 2011 அளவுகோல்களின் அடிப்படையில். உங்கள் குடும்பம் ₹5 லட்சம் சுகாதார கவரேஜிற்கு தகுதியுடையதா என சோதிக்கவும்.',
+    eligibility_title:'திட்டம் கண்டுபிடிப்பான்', eligibility_sub:'SECC 2011 அளவுகோல்களின் அடிப்படையில். உங்கள் குடும்பம் ₹5 லட்சம் சுகாதார கவரேஜிற்கு தகுதியுடையதா என சோதிக்கவும்.',
     el_income_label:'ஆண்டு குடும்ப வருமானம்', el_income_opt:['வருமான வரம்பை தேர்ந்தெடுங்கள்','₹1 லட்சத்திற்கும் குறைவு','₹1 – ₹2.5 லட்சம்','₹2.5 லட்சத்திற்கும் அதிகம்'],
     el_caste_label:'சாதி பிரிவு', el_caste_opt:['பிரிவை தேர்ந்தெடுங்கள்','SC – பட்டியல் சாதி','ST – பட்டியல் பழங்குடி','OBC – பிற பின்தங்கிய வகுப்பு','பொது'],
     el_ration_label:'ரேஷன் அட்டை வகை', el_ration_opt:['வகையை தேர்ந்தெடுங்கள்','அந்தோதய (AAY)','BPL – வறுமை கோட்டிற்கு கீழ்','APL – வறுமை கோட்டிற்கு மேல்','ரேஷன் அட்டை இல்லை'],
     el_occ_label:'தொழில் / வாழ்வாதாரம்', el_occ_opt:['தொழிலை தேர்ந்தெடுங்கள்','தினக்கூலி விவசாயி','கையால் கழிவு நீக்குபவர்','ஆதிவாசி குழு','கட்டாயமிழந்த தொழிலாளர்','கட்டுமான / செங்கல் சூளை தொழிலாளர்','வீட்டு வேலையாள்','குப்பை பொறுக்குபவர் / தெரு வியாபாரி','சம்பள / வியாபாரம் / மற்றவை'],
+    el_state_label:'State/Union Territory',
+    el_state_opt:['Select state/UT','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman & Nicobar Islands','Chandigarh','Dadra & Nagar Haveli and Daman & Diu','Delhi','Jammu & Kashmir','Ladakh','Lakshadweep','Puducherry'],
     el_check_btn:'என் தகுதியை சோதிக்கவும் →', helpline_label:'ஹெல்ப்லைன்',
   },
 
@@ -375,11 +382,13 @@ const HEALTH_DATA = {
       { name:'NPCDCS (NCD কর্মসূচি)', sub:'অ-সংক্রামক রোগ নিয়ন্ত্রণ', desc:'জেলা হাসপাতালে ডায়াবেটিস, উচ্চ রক্তচাপ, ক্যান্সারের বিনামূল্যে স্ক্রিনিং।', helpline:'1800-180-1104', color:'purple' },
       { name:'RBSK – শিশু স্বাস্থ্য স্ক্রিনিং', sub:'রাষ্ট্রীয় বাল স্বাস্থ্য কার্যক্রম', desc:'০–১৮ বছরের জন্য বিনামূল্যে স্বাস্থ্য স্ক্রিনিং। DEIC-এর মাধ্যমে ₹১ লক্ষ পর্যন্ত বিনামূল্যে চিকিৎসা।', extra:['✅ স্কুল ও অঙ্গনওয়াড়ি স্ক্রিনিং','✅ বিনামূল্যে সংশোধনমূলক অস্ত্রোপচার অন্তর্ভুক্ত'], color:'amber' }
     ],
-    eligibility_title:'PM-JAY যোগ্যতা পরীক্ষক', eligibility_sub:'SECC 2011 মানদণ্ডের উপর ভিত্তি করে। আপনার পরিবার ₹৫ লক্ষ স্বাস্থ্য কভারেজের যোগ্য কিনা পরীক্ষা করুন।',
+    eligibility_title:'স্কিম ফাইন্ডার', eligibility_sub:'SECC 2011 মানদণ্ডের উপর ভিত্তি করে। আপনার পরিবার ₹৫ লক্ষ স্বাস্থ্য কভারেজের যোগ্য কিনা পরীক্ষা করুন।',
     el_income_label:'বার্ষিক পারিবারিক আয়', el_income_opt:['আয়ের পরিসীমা বেছে নিন','₹১ লক্ষের নিচে','₹১ – ₹২.৫ লক্ষ','₹২.৫ লক্ষের উপরে'],
     el_caste_label:'জাতি বিভাগ', el_caste_opt:['বিভাগ বেছে নিন','SC – তফসিলি জাতি','ST – তফসিলি উপজাতি','OBC – অন্যান্য অনগ্রসর শ্রেণী','সাধারণ'],
     el_ration_label:'রেশন কার্ডের ধরন', el_ration_opt:['ধরন বেছে নিন','অন্ত্যোদয় (AAY)','BPL – দারিদ্র্যসীমার নিচে','APL – দারিদ্র্যসীমার উপরে','রেশন কার্ড নেই'],
     el_occ_label:'পেশা / জীবিকা', el_occ_opt:['পেশা বেছে নিন','দৈনিক মজুর কৃষি শ্রমিক','হাতে ময়লা পরিষ্কারকারী','আদিবাসী গোষ্ঠী','মুক্ত বন্ধন শ্রমিক','নির্মাণ / ইট ভাটা শ্রমিক','গৃহকর্মী','ভাঙারি কুড়ানো / হকার','বেতনভোগী / ব্যবসা / অন্য'],
+    el_state_label:'State/Union Territory',
+    el_state_opt: ['Select state/UT','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Andaman & Nicobar Islands','Chandigarh','Dadra & Nagar Haveli and Daman & Diu','Delhi','Jammu & Kashmir','Ladakh','Lakshadweep','Puducherry'],
     el_check_btn:'আমার যোগ্যতা পরীক্ষা করুন →', helpline_label:'হেল্পলাইন',
   }
 }

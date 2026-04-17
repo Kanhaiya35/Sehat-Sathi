@@ -53,21 +53,21 @@
         </div>
         <div id="navUserV" class="hidden items-center gap-2">
           <span id="navUserNameV" class="text-sm text-gray-700 dark:text-gray-200 font-medium hidden md:block"></span>
-          <button onclick="logout()" class="text-xs px-3 py-1.5 text-red-600 border border-red-300 rounded-lg hover:bg-red-50" data-translate="btn_logout">Logout</button>
+          <button data-action="logout" class="text-xs px-3 py-1.5 text-red-600 border border-red-300 rounded-lg hover:bg-red-50" data-translate="btn_logout">Logout</button>
         </div>
-        <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" title="Toggle dark mode">
+        <button data-action="dark-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" title="Toggle dark mode">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
           </svg>
         </button>
-        <select onchange="setLanguage(this.value)" class="text-xs border border-gray-200 dark:border-gray-600 rounded-lg px-2 py-1.5 bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 outline-none">
+        <select data-lang-select class="text-xs border border-gray-200 dark:border-gray-600 rounded-lg px-2 py-1.5 bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 outline-none">
           <option value="en">EN</option>
           <option value="hi">हि</option>
           <option value="mr">मर</option>
           <option value="ta">த</option>
           <option value="bn">বাং</option>
         </select>
-        <button onclick="document.getElementById('mobMenuV').classList.toggle('hidden')" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+        <button data-action="menu-toggle" data-target="mobMenuV" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
           <svg class="w-5 h-5 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -99,7 +99,7 @@
   <!-- ── Outbreak Alert Banner ─────────────────────────────────────── -->
   <div id="alertBannerV" class="hidden text-white text-center py-2.5 px-4 text-sm font-medium relative">
     <span id="alertTextV"></span>
-    <button onclick="this.parentElement.classList.add('hidden')" class="absolute right-4 top-1/2 -translate-y-1/2 opacity-70 hover:opacity-100 text-lg">✕</button>
+    <button id="dismissAlertV" class="absolute right-4 top-1/2 -translate-y-1/2 opacity-70 hover:opacity-100 text-lg">✕</button>
   </div>
 
   <!-- ── Page Header ────────────────────────────────────────────────── -->
@@ -159,7 +159,7 @@
           <option value="District Hospital">District Hospital</option>
           <option value="UHP">Urban Health Post</option>
         </select>
-        <button onclick="searchCentres()" class="flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700 transition-all whitespace-nowrap">
+        <button id="searchBtn" class="flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700 transition-all whitespace-nowrap">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z"/>
           </svg>
@@ -179,7 +179,7 @@
             <span data-translate="vac_centres_heading">Vaccination Centres</span>
             <span id="centreCount" class="text-primary-600 ml-1 text-sm font-normal"></span>
           </h3>
-          <button onclick="loadCentres()" class="text-sm text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1">
+          <button id="refreshBtn" class="text-sm text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1">
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
             </svg>
@@ -246,7 +246,7 @@
               <label class="text-xs font-medium text-gray-600 dark:text-gray-400 block mb-1" data-translate="vac_dob_label">Child's Date of Birth</label>
               <input id="childDob" type="date" class="w-full px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 dark:text-white text-sm focus:ring-2 focus:ring-primary-500 outline-none">
             </div>
-            <button onclick="calculateReminder()" class="w-full py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 text-sm transition-all flex items-center justify-center gap-2">
+            <button id="calcReminderBtn" class="w-full py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 text-sm transition-all flex items-center justify-center gap-2">
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
@@ -354,9 +354,10 @@
   <script src="/js/lang/mr.js"></script>
   <script src="/js/lang/ta.js"></script>
   <script src="/js/lang/bn.js"></script>
-  <script src="/js/translate.js"></script>
-  <script src="/js/auth.js"></script>
-  <script src="/js/vaccination.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=<your-api-key>&libraries=places"></script>
+  <script src="/js/translate.js" defer></script>
+  <script src="/js/auth.js" defer></script>
+  <script src="/js/vaccination.js" defer></script>
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBbEMRsSCYQrhdGQCcwodzXRE35L24Ak0&libraries=places&callback=initMap" async></script>
 </body>
 </html>

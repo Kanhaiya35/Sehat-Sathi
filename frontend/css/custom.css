@@ -7,7 +7,7 @@
   transition-timing-function: ease;
 }
 
-/* Animations */
+/* ── Animations ── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-12px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -21,18 +21,24 @@
   50%      { opacity: .5; }
 }
 
-.animate-fadeIn { animation: fadeIn 0.3s ease forwards; }
-.animate-slideUp { animation: slideUp 0.4s ease forwards; }
+.animate-fadeIn   { animation: fadeIn  0.3s ease forwards; }
+.animate-slideUp  { animation: slideUp 0.4s ease forwards; }
 .animate-pulse-slow { animation: pulse-slow 2s ease infinite; }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
 .dark ::-webkit-scrollbar-thumb { background: #4b5563; }
-::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+::-webkit-scrollbar-thumb:hover  { background: #9ca3af; }
 
-/* Chat bubbles */
+/* Thin scrollbar for chat sidebar */
+#messages::-webkit-scrollbar      { width: 4px; }
+#messages::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+#historyList::-webkit-scrollbar      { width: 3px; }
+#historyList::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+
+/* ── Chat bubbles ── */
 .chat-bubble-user {
   background: linear-gradient(135deg, #059669, #047857);
   color: #fff;
@@ -48,7 +54,22 @@
   border-color: #374151;
 }
 
-/* Typing indicator */
+/* Chat input auto-resize */
+#chatInput {
+  min-height: 44px;
+  max-height: 160px;
+}
+.dark #chatInput {
+  background: #1f2937;
+  color: #f9fafb;
+  border-color: #374151;
+}
+.dark #chatInput::placeholder { color: #6b7280; }
+
+/* Send button disabled */
+#sendBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Typing indicator ── */
 .typing-dot {
   width: 7px; height: 7px;
   background: #9ca3af;
@@ -62,13 +83,13 @@
   50%      { transform: translateY(-6px); }
 }
 
-/* Admin sidebar active */
+/* ── Admin sidebar active ── */
 .active-nav {
   background: rgba(16,185,129,0.15);
   color: #10b981 !important;
 }
 
-/* Tab active */
+/* ── Tab active state ── */
 .active-tab {
   background: #fff;
   color: #047857;
@@ -76,7 +97,16 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
 
-/* Severity badge */
+/* Health page tab (used in health.html inline style → moved here) */
+.tab-active { background: white !important; color: #047857 !important; font-weight: 700; }
+
+/* ── Feature cards ── */
+.feature-card-link { display: block; text-decoration: none; color: inherit; }
+.feature-card      { cursor: pointer; transition: all 0.2s ease; }
+.feature-card:hover { transform: translateY(-3px); }
+.icon-wrap svg { display: block; }
+
+/* ── Severity badges ── */
 .severity-low      { background:#d1fae5; color:#065f46; }
 .severity-medium   { background:#fef9c3; color:#713f12; }
 .severity-high     { background:#fee2e2; color:#7f1d1d; }
@@ -86,17 +116,17 @@
 .dark .severity-high     { background:#450a0a; color:#fca5a5; }
 .dark .severity-critical { background:#7f1d1d; color:#fecaca; }
 
-/* Disease card hover */
+/* ── Disease card hover ── */
 .disease-card:hover { transform: translateY(-2px); }
 
-/* Focus visible */
+/* ── Focus visible ── */
 *:focus-visible {
   outline: 2px solid #059669;
   outline-offset: 2px;
   border-radius: 6px;
 }
 
-/* Print */
+/* ── Print ── */
 @media print {
   nav, footer, button, .fixed { display: none !important; }
   body { background: #fff !important; color: #000 !important; }

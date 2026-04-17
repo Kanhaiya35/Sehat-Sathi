@@ -82,21 +82,20 @@ const DISEASE_MAP = {
 
 // ── Tab Switching ────────────────────────────────────────────────────────────
 function showTab(name) {
-  ['diseases','prevention','maternal','schemes','checker'].forEach(t => {
+  const tabs = ['diseases','prevention','maternal','schemes','checker'];
+  tabs.forEach(t => {
     document.getElementById('sec-' + t)?.classList.toggle('hidden', t !== name);
     const btn = document.getElementById('tab-' + t);
     if (btn) {
-      btn.classList.toggle('active-tab', t === name);
       if (t === name) {
-        btn.classList.remove('bg-white/15','text-white');
-        btn.classList.add('bg-white','text-primary-700');
+        btn.classList.remove('bg-white/15','text-white','border','border-white/30','hover:bg-white/25');
+        btn.classList.add('bg-white','text-primary-700','font-semibold','shadow');
       } else {
-        btn.classList.remove('bg-white','text-primary-700');
-        btn.classList.add('bg-white/15','text-white');
+        btn.classList.remove('bg-white','text-primary-700','font-semibold','shadow');
+        btn.classList.add('bg-white/15','text-white','border','border-white/30','hover:bg-white/25');
       }
     }
   });
-  // Update URL hash
   window.location.hash = name;
 }
 
@@ -123,11 +122,19 @@ function checkEligibility() {
   let eligible = false;
   let reason   = '';
 
-  // PM-JAY eligibility logic based on SECC criteria
-  if (ration === 'antyodaya' || ration === 'bpl') { eligible = true; reason = 'BPL/Antyodaya ration card holders are automatically eligible.'; }
-  else if (income === 'low' && ['sc','st'].includes(caste)) { eligible = true; reason = 'Low income SC/ST families qualify under SECC deprivation criteria.'; }
-  else if (occupation === 'agriculture' || occupation === 'manual' || occupation === 'tribal' || occupation === 'bonded') { eligible = true; reason = 'Occupational category qualifies under SECC rural deprivation criteria.'; }
-  else if (income === 'low' && ration === 'none') { eligible = true; reason = 'Low income families without ration card – apply via PM-JAY grievance portal.'; }
+  if (ration === 'antyodaya' || ration === 'bpl') {
+    eligible = true;
+    reason   = 'BPL/Antyodaya ration card holders are automatically eligible.';
+  } else if (income === 'low' && ['sc','st'].includes(caste)) {
+    eligible = true;
+    reason   = 'Low income SC/ST families qualify under SECC deprivation criteria.';
+  } else if (['agriculture','manual','tribal','bonded'].includes(occupation)) {
+    eligible = true;
+    reason   = 'Occupational category qualifies under SECC rural deprivation criteria.';
+  } else if (income === 'low' && ration === 'none') {
+    eligible = true;
+    reason   = 'Low income families without ration card – apply via PM-JAY grievance portal.';
+  }
 
   if (resultBox) {
     resultBox.classList.remove('hidden');
@@ -167,6 +174,25 @@ function buildSymptomCheckboxes() {
         class="w-4 h-4 rounded text-primary-600 border-gray-300 dark:border-gray-600 focus:ring-primary-500">
       <span class="text-sm text-gray-700 dark:text-gray-300">${s.label}</span>
     </label>`).join('');
+}
+
+function clearSymptoms() {
+  document.querySelectorAll('#symptomCheckboxes input[type="checkbox"]').forEach(cb => {
+    cb.checked = false;
+  });
+  const container = document.getElementById('symptomResults');
+  if (container) {
+    container.innerHTML = `
+      <div class="text-center py-12 text-gray-400">
+        <div class="flex justify-center mb-3">
+          <svg class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803zM10.5 7.5v6m3-3h-6"/>
+          </svg>
+        </div>
+        <p class="text-sm">Select your symptoms and click Analyze.</p>
+        <p class="text-xs mt-1 text-gray-300 dark:text-gray-500">Results are for awareness only.</p>
+      </div>`;
+  }
 }
 
 function analyzeSymptoms() {
@@ -241,9 +267,25 @@ document.addEventListener('DOMContentLoaded', () => {
     tipIndex = dayIdx;
   }
 
+  // Wire tab buttons via data attributes
+  document.querySelectorAll('[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => showTab(btn.getAttribute('data-tab')));
+  });
+
+  // Wire Analyze button
+  const analyzeBtn = document.getElementById('analyzeBtn');
+  if (analyzeBtn) analyzeBtn.addEventListener('click', analyzeSymptoms);
+
+  // Wire Clear button
+  const clearBtn = document.getElementById('clearBtn');
+  if (clearBtn) clearBtn.addEventListener('click', clearSymptoms);
+
+  // Wire eligibility check button
+  const eligBtn = document.getElementById('checkEligibilityBtn');
+  if (eligBtn) eligBtn.addEventListener('click', checkEligibility);
+
   // Handle URL hash navigation
-  const hash = window.location.hash.replace('#', '');
-  if (hash && ['diseases','prevention','maternal','schemes','checker'].includes(hash)) {
-    showTab(hash);
-  }
+  const hash     = window.location.hash.replace('#', '');
+  const validTab = ['diseases','prevention','maternal','schemes','checker'];
+  showTab(validTab.includes(hash) ? hash : 'diseases');
 });

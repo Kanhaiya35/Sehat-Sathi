@@ -1,5 +1,11 @@
 const winston = require('winston');
 const morgan  = require('morgan');
+const fs = require('fs');
+
+const logDir = 'logs';
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
 
 const fmt = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -8,10 +14,18 @@ const fmt = winston.format.combine(
 );
 
 const logger = winston.createLogger({
-  level: process.env.NODE_ENV === 'production' ? 'warn' : 'info',
+  levels: {
+    error: 0,
+    warn: 1,
+    info: 2,
+    http: 3,
+    debug: 4,
+  },
+  level: process.env.NODE_ENV === 'production' ? 'warn' : 'debug',
   format: fmt,
   transports: [
     new winston.transports.Console({
+      level: process.env.NODE_ENV === 'production' ? 'warn' : 'debug',
       format: winston.format.combine(
         winston.format.colorize(),
         winston.format.printf(({ timestamp, level, message, stack }) =>
@@ -21,15 +35,26 @@ const logger = winston.createLogger({
         )
       ),
     }),
-    new winston.transports.File({ filename: 'logs/error.log',    level: 'error', maxsize: 5_242_880, maxFiles: 5 }),
-    new winston.transports.File({ filename: 'logs/combined.log',               maxsize: 5_242_880, maxFiles: 5 }),
+    new winston.transports.File({
+      filename: 'logs/error.log',
+      level: 'error',
+      maxsize: 5_242_880,
+      maxFiles: 5
+    }),
+    new winston.transports.File({
+      filename: 'logs/combined.log',
+      maxsize: 5_242_880,
+      maxFiles: 5
+    }),
   ],
 });
 
-const morganStream = { write: (msg) => logger.http(msg.trim()) };
+const morganStream = {
+  write: (msg) => logger.http(msg.trim())
+};
 
 const requestLogger = morgan(
-  ':remote-addr :method :url :status :res[content-length] - :response-time ms',
+  ':remote-addr :method :url :status :response-time ms - :res[content-length]',
   { stream: morganStream }
 );
 

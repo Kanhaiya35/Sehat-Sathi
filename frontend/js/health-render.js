@@ -35,10 +35,213 @@ const SCHEME_ICONS = {
   amber:    `<svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>`,
 }
 
+/* ── Global scheme data cache ── */
+let _allSchemes = []
+
+/* ── Fetch and cache schemes.json ── */
+async function loadSchemesData() {
+  if (_allSchemes.length > 0) return _allSchemes
+  try {
+    const res = await fetch('/data/schemes.json')
+    _allSchemes = await res.json()
+  } catch (e) {
+    console.warn('schemes.json not found, falling back to lang data', e)
+    _allSchemes = []
+  }
+  return _allSchemes
+}
+
 /* ── Get current language data ── */
 function getLangData() {
   const lang = localStorage.getItem('ss_lang') || 'en'
   return HEALTH_DATA[lang] || HEALTH_DATA['en']
+}
+
+/* ── Build a single scheme card HTML (used for both central & state schemes) ── */
+function buildSchemeCardHTML(s, d) {
+  const sc = SCHEME_CLR[s.color] || SCHEME_CLR.primary
+  const helplineLabel = d.helpline_label || 'Helpline'
+  return `
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm ${sc.border} hover:shadow-md transition-shadow">
+    <div class="flex items-start gap-4">
+      <div class="w-14 h-14 ${sc.iconBg} rounded-2xl flex items-center justify-center flex-shrink-0">
+        <span class="${sc.icon}">${SCHEME_ICONS[s.color] || SCHEME_ICONS.primary}</span>
+      </div>
+      <div class="flex-1">
+        <h3 class="font-bold text-xl text-gray-800 dark:text-white">${s.scheme_name || s.name}</h3>
+        <p class="text-xs ${sc.icon} font-medium mb-2">${s.sub}</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">${s.desc}</p>
+        ${s.badge ? `
+        <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+          <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-2"><p class="font-semibold text-green-700 dark:text-green-400">${s.badge.label}</p><p class="text-gray-400">${s.badge.value}</p></div>
+          ${s.helpline ? `<div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-2"><p class="font-semibold text-blue-700 dark:text-blue-400">${helplineLabel}</p><p><a href="tel:${s.helpline}" class="font-bold text-primary-600">${s.helpline}</a></p></div>` : ''}
+        </div>` : ''}
+        ${s.badge1 ? `
+        <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+          <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-2"><p class="font-semibold text-green-700 dark:text-green-400">${s.badge1}</p><p class="text-gray-400">${s.badge1v}</p></div>
+          <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-2"><p class="font-semibold text-blue-700 dark:text-blue-400">${helplineLabel}</p><p><a href="tel:${s.badge2v}" class="font-bold text-primary-600">${s.badge2v}</a></p></div>
+        </div>` : ''}
+        ${s.extra ? `<div class="mt-3 text-xs text-gray-500 dark:text-gray-400 space-y-1">${s.extra.map(e => `<p>✅ ${e.replace(/^✅\s*/,'')}</p>`).join('')}</div>` : ''}
+        ${s.helpline && !s.badge ? `<div class="mt-3 text-xs text-gray-500 dark:text-gray-400"><p>${helplineLabel}: <a href="tel:${s.helpline}" class="text-primary-600 font-medium">${s.helpline}</a></p></div>` : ''}
+        ${s.tags ? `<div class="mt-3 flex flex-wrap gap-1">${s.tags.map(t => `<span class="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-full text-xs">${t}</span>`).join('')}</div>` : ''}
+      </div>
+    </div>
+  </div>`
+}
+
+/* ── Render scheme cards (central schemes from HEALTH_DATA + state section) ── */
+async function renderSchemes() {
+  const el = document.getElementById('schemeCards')
+  if (!el) return
+  const d = getLangData()
+
+  /* Pre-load schemes.json in background */
+  await loadSchemesData()
+
+  let html = ''
+
+  /* ── Central Schemes Section ── */
+  html += `
+  <div class="mb-6">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="w-1 h-6 bg-primary-500 rounded-full inline-block"></span>
+      <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+        ${d.central_schemes_label || '🏛️ Central Government Schemes'}
+      </h3>
+    </div>
+    <div id="centralSchemeGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">`
+
+  /* Render from HEALTH_DATA lang schemes (for multilingual support) */
+  d.schemes.forEach(s => {
+    html += buildSchemeCardHTML(s, d)
+  })
+
+  html += `</div>
+  </div>`
+
+  /* ── State Schemes Section (initially hidden / placeholder) ── */
+  html += `
+  <div id="stateSchemeSection" class="mb-8 hidden">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="w-1 h-6 bg-emerald-500 rounded-full inline-block"></span>
+      <h3 id="stateSchemeHeading" class="text-lg font-bold text-gray-800 dark:text-white">
+        🗺️ State Schemes
+      </h3>
+    </div>
+    <div id="stateSchemeGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+  </div>`
+
+  /* ── Eligibility Checker Form ── */
+  html += `
+  <div id="eligibilityChecker" class="bg-primary-50 dark:bg-primary-900/20 rounded-2xl p-6 border border-primary-200 dark:border-primary-700">
+    <h3 class="text-xl font-bold text-primary-800 dark:text-primary-300 mb-1 flex items-center gap-2">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z"/></svg>
+      ${d.eligibility_title}
+    </h3>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">${d.eligibility_sub}</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+      ${buildSelect('income',     d.el_income_label,  d.el_income_opt)}
+      ${buildSelect('caste',      d.el_caste_label,   d.el_caste_opt)}
+      ${buildSelect('ration',     d.el_ration_label,  d.el_ration_opt)}
+      ${buildSelect('occupation', d.el_occ_label,     d.el_occ_opt)}
+      ${buildSelectWithChange('state', d.el_state_label, d.el_state_opt)}
+    </div>
+    <button onclick="checkEligibility()" class="w-full sm:w-auto px-8 py-3 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700 transition-all flex items-center gap-2">
+      ${d.el_check_btn}
+    </button>
+    <div id="eligibilityResult" class="hidden mt-5 rounded-xl p-5 border-2">
+      <div id="eligibilityIcon" class="text-4xl mb-2"></div>
+      <h4 id="eligibilityTitle" class="text-lg font-bold mb-1"></h4>
+      <p  id="eligibilityText"  class="text-sm mb-3"></p>
+      <div id="eligibilityLinks" class="space-y-1 text-sm"></div>
+    </div>
+  </div>`
+
+  el.innerHTML = html
+}
+
+/* ── Build a regular select (no onChange) ── */
+function buildSelect(id, label, options) {
+  return `
+  <div>
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">${label}</label>
+    <select id="${id}" class="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 outline-none text-sm">
+      ${options.map((o, i) => `<option value="${i === 0 ? '' : o}">${o}</option>`).join('')}
+    </select>
+  </div>`
+}
+
+/* ── Build the State select with onChange handler to load state schemes ── */
+function buildSelectWithChange(id, label, options) {
+  return `
+  <div>
+    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">${label}</label>
+    <select id="${id}"
+      onchange="onStateChange(this.value)"
+      class="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 outline-none text-sm">
+      ${options.map((o, i) => `<option value="${i === 0 ? '' : o}">${o}</option>`).join('')}
+    </select>
+  </div>`
+}
+
+/* ── Called when state dropdown changes ── */
+async function onStateChange(selectedState) {
+  const section  = document.getElementById('stateSchemeSection')
+  const grid     = document.getElementById('stateSchemeGrid')
+  const heading  = document.getElementById('stateSchemeHeading')
+
+  if (!selectedState || selectedState === '') {
+    section.classList.add('hidden')
+    return
+  }
+
+  /* Show loading state */
+  section.classList.remove('hidden')
+  heading.textContent = `🗺️ ${selectedState} – State Schemes`
+  grid.innerHTML = `
+    <div class="col-span-2 flex items-center gap-3 py-6 px-4 text-gray-400">
+      <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      <span class="text-sm">Loading ${selectedState} schemes…</span>
+    </div>`
+
+  /* Ensure data is loaded */
+  const allSchemes = await loadSchemesData()
+  const d = getLangData()
+
+  /* Filter for this state (case-insensitive) */
+  const stateSchemes = allSchemes.filter(
+    s => s.state && s.state.toLowerCase() === selectedState.toLowerCase()
+  )
+
+  if (stateSchemes.length === 0) {
+    grid.innerHTML = `
+      <div class="col-span-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-2xl p-5 flex items-start gap-3">
+        <svg class="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <div>
+          <p class="text-sm font-semibold text-amber-700 dark:text-amber-400">No state-specific schemes found for ${selectedState}</p>
+          <p class="text-xs text-amber-600 dark:text-amber-500 mt-1">
+            Residents of ${selectedState} are still eligible for all Central Government schemes listed above.
+            Visit your state health department website for the latest local schemes.
+          </p>
+        </div>
+      </div>`
+    return
+  }
+
+  /* Render state scheme cards */
+  let html = ''
+  stateSchemes.forEach(s => {
+    html += buildSchemeCardHTML(s, d)
+  })
+  grid.innerHTML = html
+
+  /* Smooth scroll to the state section */
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 /* ── Render disease cards ── */
@@ -148,83 +351,11 @@ function renderPrevention() {
   el.innerHTML = html
 }
 
-/* ── Render scheme cards ── */
-function renderSchemes() {
-  const el = document.getElementById('schemeCards')
-  if (!el) return
-  const d = getLangData()
-
-  let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">'
-
-  d.schemes.forEach(s => {
-    const sc = SCHEME_CLR[s.color] || SCHEME_CLR.primary
-    html += `
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm ${sc.border} hover:shadow-md transition-shadow">
-      <div class="flex items-start gap-4">
-        <div class="w-14 h-14 ${sc.iconBg} rounded-2xl flex items-center justify-center flex-shrink-0">
-          <span class="${sc.icon}">${SCHEME_ICONS[s.color] || SCHEME_ICONS.primary}</span>
-        </div>
-        <div class="flex-1">
-          <h3 class="font-bold text-xl text-gray-800 dark:text-white">${s.name}</h3>
-          <p class="text-xs ${sc.icon} font-medium mb-2">${s.sub}</p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">${s.desc}</p>
-          ${s.badge1 ? `
-          <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
-            <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-2"><p class="font-semibold text-green-700 dark:text-green-400">${s.badge1}</p><p class="text-gray-400">${s.badge1v}</p></div>
-            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-2"><p class="font-semibold text-blue-700 dark:text-blue-400">${d.helpline_label}</p><p><a href="tel:${s.badge2v}" class="font-bold text-primary-600">${s.badge2v}</a></p></div>
-          </div>` : ''}
-          ${s.extra ? `<div class="mt-3 text-xs text-gray-500 dark:text-gray-400 space-y-1">${s.extra.map(e => `<p>${e}</p>`).join('')}</div>` : ''}
-          ${s.helpline ? `<div class="mt-3 text-xs text-gray-500 dark:text-gray-400"><p>${d.helpline_label}: <a href="tel:${s.helpline}" class="text-primary-600 font-medium">${s.helpline}</a></p></div>` : ''}
-        </div>
-      </div>
-    </div>`
-  })
-
-  html += '</div>'
-
-  /* Eligibility checker form */
-  html += `
-  <div id="eligibilityChecker" class="bg-primary-50 dark:bg-primary-900/20 rounded-2xl p-6 border border-primary-200 dark:border-primary-700">
-    <h3 class="text-xl font-bold text-primary-800 dark:text-primary-300 mb-1 flex items-center gap-2">
-      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z"/></svg>
-      ${d.eligibility_title}
-    </h3>
-    <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">${d.eligibility_sub}</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
-      ${buildSelect('income',     d.el_income_label,  d.el_income_opt)}
-      ${buildSelect('caste',      d.el_caste_label,   d.el_caste_opt)}
-      ${buildSelect('ration',     d.el_ration_label,  d.el_ration_opt)}
-      ${buildSelect('occupation', d.el_occ_label,     d.el_occ_opt)}
-    </div>
-    <button onclick="checkEligibility()" class="w-full sm:w-auto px-8 py-3 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700 transition-all flex items-center gap-2">
-      ${d.el_check_btn}
-    </button>
-    <div id="eligibilityResult" class="hidden mt-5 rounded-xl p-5 border-2">
-      <div id="eligibilityIcon" class="text-4xl mb-2"></div>
-      <h4 id="eligibilityTitle" class="text-lg font-bold mb-1"></h4>
-      <p  id="eligibilityText"  class="text-sm mb-3"></p>
-      <div id="eligibilityLinks" class="space-y-1 text-sm"></div>
-    </div>
-  </div>`
-
-  el.innerHTML = html
-}
-
-function buildSelect(id, label, options) {
-  return `
-  <div>
-    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">${label}</label>
-    <select id="${id}" class="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 outline-none text-sm">
-      ${options.map((o, i) => `<option value="${i === 0 ? '' : o.toLowerCase().split(' ')[0]}">${o}</option>`).join('')}
-    </select>
-  </div>`
-}
-
 /* ── Main render + hook into setLanguage ── */
-function renderAllHealthCards() {
+async function renderAllHealthCards() {
   renderDiseases()
   renderPrevention()
-  renderSchemes()
+  await renderSchemes()
 }
 
 /* Run on page load */

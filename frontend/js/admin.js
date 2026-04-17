@@ -4,45 +4,64 @@
 let currentPage   = 1;
 let totalPages    = 1;
 let searchTimeout = null;
+const API_BASE = window.location.origin;
 
+function $(id){
+  return document.getElementById(id);
+}
+
+async function api(url, options = {}) {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+
+    const res = await fetch(API_BASE + url, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers || {})
+      },
+      credentials: "include", // 🔥 IMPORTANT
+      signal: controller.signal
+    });
+
+    clearTimeout(timeout);
+
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.msg || "API error");
+
+    return data;
+
+  } catch (err) {
+    console.error("API ERROR:", err);
+    throw err;
+  }
+}
 // ── Init ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
-  const user = getUser();
-  const guard = document.getElementById('adminGuard');
-  const layout = document.getElementById('adminLayout');
+  try {
+    const data = await api('/api/auth/me'); // 🔥 backend validation
+    const user = data.user;
 
-  if (!user) {
-    document.getElementById('guardIcon').textContent  = '🔐';
-    document.getElementById('guardTitle').textContent = 'Login Required';
-    document.getElementById('guardMsg').textContent   = 'Admin access requires authentication.';
-    document.getElementById('guardLinks').classList.remove('hidden');
-    document.getElementById('guardLinks').style.display = 'flex';
-    return;
+    if (!user) throw new Error("Not logged in");
+    if (user.role !== "admin") throw new Error("Not admin");
+
+    $('adminGuard').classList.add('hidden');
+    $('adminLayout').classList.remove('hidden');
+
+    $('adminName').textContent = user.name || "Admin";
+
+    loadStats();
+
+  } catch (err) {
+    $('guardIcon').textContent  = '🚫';
+    $('guardTitle').textContent = 'Access Denied';
+    $('guardMsg').textContent   = err.message;
+    $('guardLinks').classList.remove('hidden');
   }
-
-  if (user.role !== 'admin') {
-    document.getElementById('guardIcon').textContent  = '🚫';
-    document.getElementById('guardTitle').textContent = 'Access Denied';
-    document.getElementById('guardMsg').textContent   = 'You do not have admin privileges.';
-    document.getElementById('guardLinks').classList.remove('hidden');
-    document.getElementById('guardLinks').style.display = 'flex';
-    return;
-  }
-
-  // Admin confirmed
-  guard.classList.add('hidden');
-  layout.classList.remove('hidden');
-
-  const nameEl = document.getElementById('adminName');
-  if (nameEl) nameEl.textContent = user.name || 'Admin';
-
-  // Restore dark mode
-  if (localStorage.getItem('ss_dark') === '1') {
-    document.documentElement.classList.add('dark');
-  }
-
-  loadStats();
 });
+
 
 // ── Section Switching ────────────────────────────────────────────────────────
 function showSection(name) {

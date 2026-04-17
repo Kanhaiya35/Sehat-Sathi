@@ -1,0 +1,418 @@
+[
+  {
+    "scheme_name": "Ayushman Bharat PM-JAY",
+    "state": "central",
+    "sub": "Pradhan Mantri Jan Arogya Yojana",
+    "desc": "₹5 lakh cover per family per year. 50 crore people. Cashless at 24,000+ hospitals. 1,929 procedures covered.",
+    "helpline": "14555",
+    "color": "primary",
+    "badge": { "label": "Pre-existing", "value": "Covered Day 1" },
+    "tags": ["insurance", "hospitalization", "cashless"]
+  },
+  {
+    "scheme_name": "Mission Indradhanush",
+    "state": "central",
+    "sub": "National Immunization Mission",
+    "desc": "Full immunisation for 2 crore+ children & pregnant women. 12 vaccine-preventable diseases. Free at all PHC/CHC.",
+    "helpline": null,
+    "color": "blue",
+    "extra": ["BCG, DPT, Polio, MMR, Hep-B, JE + more", "Intensified Mission Indradhanush (IMI 5.0)"],
+    "tags": ["vaccine", "children", "pregnancy"]
+  },
+  {
+    "scheme_name": "PMMVY – Maternity Benefit",
+    "state": "central",
+    "sub": "Pradhan Mantri Matru Vandana Yojana",
+    "desc": "₹5,000 cash in 3 installments for first live birth. Direct bank transfer. Register through Anganwadi/ASHA.",
+    "helpline": null,
+    "color": "pink",
+    "extra": ["₹1,000 on registration | ₹2,000 at 6 months | ₹2,000 after delivery"],
+    "tags": ["maternity", "cash transfer", "women"]
+  },
+  {
+    "scheme_name": "Nikshay Poshan Yojana",
+    "state": "central",
+    "sub": "TB Patient Nutritional Support",
+    "desc": "₹500/month during TB treatment. Free DOTS medication. Aadhaar-linked DBT to patient account.",
+    "helpline": "1800-11-6666",
+    "color": "teal",
+    "tags": ["TB", "nutrition", "cash transfer"]
+  },
+  {
+    "scheme_name": "NPCDCS",
+    "state": "central",
+    "sub": "Non-Communicable Diseases Control Programme",
+    "desc": "Free screening & treatment for Diabetes, Hypertension, Cancer, CVD at all District Hospitals.",
+    "helpline": "1800-180-1104",
+    "color": "purple",
+    "tags": ["diabetes", "cancer", "NCD", "screening"]
+  },
+  {
+    "scheme_name": "RBSK – Child Health Screening",
+    "state": "central",
+    "sub": "Rashtriya Bal Swasthya Karyakram",
+    "desc": "Free health screening for 0–18 years. 4D defects covered. Free treatment up to ₹1 lakh via DEIC.",
+    "helpline": null,
+    "color": "amber",
+    "extra": ["School & Anganwadi screening", "Free corrective surgeries included"],
+    "tags": ["children", "screening", "disability"]
+  },
+
+  {
+    "scheme_name": "Mahatma Jyotiba Phule Jan Arogya Yojana (MJPJAY)",
+    "state": "Maharashtra",
+    "sub": "Maharashtra State Health Insurance Scheme",
+    "desc": "Cashless treatment up to ₹1.5 lakh per year for BPL, farmers, and selected families. Covers 996 medical procedures at empanelled hospitals.",
+    "helpline": "155388",
+    "color": "primary",
+    "extra": ["Covers farmers, BPL, Orange/Yellow ration card holders", "Transplants & cancer surgeries included"],
+    "tags": ["insurance", "farmers", "BPL", "hospitalization"]
+  },
+  {
+    "scheme_name": "Rajiv Gandhi Jeevandayee Arogya Yojana",
+    "state": "Maharashtra",
+    "sub": "Enhanced Cashless Health Insurance",
+    "desc": "Merged with MJPJAY. Provides cashless tertiary care. Covers 971 disease packages. Available at government & selected private hospitals.",
+    "helpline": "1800-233-7866",
+    "color": "blue",
+    "tags": ["insurance", "tertiary care", "cashless"]
+  },
+  {
+    "scheme_name": "Jeeva Scheme – Maharashtra Mental Health",
+    "state": "Maharashtra",
+    "sub": "State Mental Health Programme",
+    "desc": "Free psychiatric treatment at District Mental Health Programme centres. Medicines, counselling, and rehabilitation support covered.",
+    "helpline": "iCall: 9152987821",
+    "color": "purple",
+    "tags": ["mental health", "psychiatry", "free treatment"]
+  },
+
+  {
+    "scheme_name": "YSR Aarogyasri Health Care Trust",
+    "state": "Andhra Pradesh",
+    "sub": "AP State Health Insurance Scheme",
+    "desc": "Free healthcare up to ₹5 lakh per year for families with white ration card. Covers 2,790 medical procedures at empanelled hospitals.",
+    "helpline": "104",
+    "color": "primary",
+    "extra": ["Covers all BPL & eligible APL families", "Pre-existing diseases covered from day 1"],
+    "tags": ["insurance", "BPL", "hospitalization"]
+  },
+  {
+    "scheme_name": "NTR Vaidya Seva",
+    "state": "Andhra Pradesh",
+    "sub": "AP Chief Minister's Health Insurance",
+    "desc": "Cashless healthcare for eligible families. Covers cardiac, cancer, kidney, burns & poly-trauma. Linked with Aadhaar for seamless access.",
+    "helpline": "1800-425-9440",
+    "color": "blue",
+    "tags": ["insurance", "cardiac", "cancer", "cashless"]
+  },
+
+  {
+    "scheme_name": "Chief Minister's Comprehensive Health Insurance Scheme (CMCHIS)",
+    "state": "Tamil Nadu",
+    "sub": "Tamil Nadu State Health Scheme",
+    "desc": "₹5 lakh per family per year for families earning below ₹72,000 per annum. Covers 1,027 surgical procedures at 1,100+ hospitals.",
+    "helpline": "044-28592828",
+    "color": "primary",
+    "extra": ["Covers all government employees too", "Organ transplants & cancer treatment included"],
+    "tags": ["insurance", "surgery", "cancer", "cashless"]
+  },
+  {
+    "scheme_name": "Makkalai Thedi Maruthuvam",
+    "state": "Tamil Nadu",
+    "sub": "Doorstep Healthcare Delivery",
+    "desc": "Mobile health unit visits every household every 3 months. Free basic diagnostics, medicine distribution, and referral for chronic diseases.",
+    "helpline": "104",
+    "color": "teal",
+    "tags": ["doorstep", "primary care", "chronic disease"]
+  },
+  {
+    "scheme_name": "Kalaignar Magalir Urimai Thittam",
+    "state": "Tamil Nadu",
+    "sub": "Women Health & Nutrition Support",
+    "desc": "₹1,000/month cash transfer for women heads of household. Complementary health benefits including free maternal care and nutrition supplementation.",
+    "helpline": "1800-425-1234",
+    "color": "pink",
+    "tags": ["women", "cash transfer", "nutrition"]
+  },
+
+  {
+    "scheme_name": "Arogya Karnataka (Ayushman Bharat – Karnataka)",
+    "state": "Karnataka",
+    "sub": "Karnataka Universal Health Coverage",
+    "desc": "Universal health coverage for all Karnataka residents. ₹5 lakh for BPL & APL-I families; ₹1.5 lakh for APL-II. Cashless at govt. hospitals.",
+    "helpline": "104",
+    "color": "primary",
+    "extra": ["Covers all Karnataka domicile residents", "1,600+ procedures covered"],
+    "tags": ["insurance", "universal coverage", "cashless"]
+  },
+  {
+    "scheme_name": "Rajiv Arogya Bhagya",
+    "state": "Karnataka",
+    "sub": "Free Medicines & Diagnostics",
+    "desc": "Free essential medicines and diagnostic services at all government health facilities in Karnataka. 250+ medicines & 50 diagnostics free.",
+    "helpline": "104",
+    "color": "teal",
+    "tags": ["free medicines", "diagnostics", "primary care"]
+  },
+
+  {
+    "scheme_name": "Biju Swasthya Kalyan Yojana (BSKY)",
+    "state": "Odisha",
+    "sub": "Odisha Universal Health Coverage",
+    "desc": "₹5 lakh for women, ₹3 lakh for other family members. Covers all NFSA card holders. Free treatment at government hospitals & empanelled private hospitals.",
+    "helpline": "104",
+    "color": "primary",
+    "extra": ["100% cashless for Smart Card holders", "Includes pre & post-hospitalization costs"],
+    "tags": ["insurance", "women", "NFSA", "cashless"]
+  },
+
+  {
+    "scheme_name": "Mukhyamantri Swasthya Sewa Yojana",
+    "state": "Madhya Pradesh",
+    "sub": "MP State Health Insurance",
+    "desc": "Cashless treatment for BPL & below poverty line families. Covers 500+ critical illnesses. Integrated with Ayushman Bharat for enhanced coverage.",
+    "helpline": "181",
+    "color": "blue",
+    "tags": ["insurance", "BPL", "critical illness"]
+  },
+  {
+    "scheme_name": "Deen Dayal Antyodaya Upchar Yojana",
+    "state": "Madhya Pradesh",
+    "sub": "MP Free Treatment Scheme",
+    "desc": "Free treatment for BPL families at all government hospitals. Covers OPD and IPD services. Medicines, diagnostics and specialist care all free.",
+    "helpline": "0755-2570100",
+    "color": "teal",
+    "tags": ["free treatment", "BPL", "OPD"]
+  },
+
+  {
+    "scheme_name": "Mukhyamantri Amrutum (MA) Yojana",
+    "state": "Gujarat",
+    "sub": "Gujarat Health Insurance Scheme",
+    "desc": "Cashless hospitalization up to ₹3 lakh per year for BPL families. Covers heart, kidney, cancer, burns, polytrauma & neurosurgery.",
+    "helpline": "1800-233-1022",
+    "color": "primary",
+    "extra": ["MA Vatsalya covers APL families up to ₹2 lakh", "Covers newborn up to 3 months"],
+    "tags": ["insurance", "BPL", "cardiac", "cancer"]
+  },
+  {
+    "scheme_name": "Nirogi Gujarat – NCD Prevention",
+    "state": "Gujarat",
+    "sub": "Gujarat Non-Communicable Disease Programme",
+    "desc": "Free screening, early detection and treatment of diabetes, hypertension, and cancer at all district hospitals and CHCs in Gujarat.",
+    "helpline": "104",
+    "color": "purple",
+    "tags": ["NCD", "diabetes", "cancer", "screening"]
+  },
+
+  {
+    "scheme_name": "Mukhyamantri Chitransh Swasthya Bima Yojana",
+    "state": "Chhattisgarh",
+    "sub": "CG Health Insurance",
+    "desc": "₹5 lakh cashless treatment for all Chhattisgarh residents. Covers 960 procedures. Works in addition to Ayushman Bharat coverage.",
+    "helpline": "14555",
+    "color": "primary",
+    "tags": ["insurance", "cashless", "all residents"]
+  },
+  {
+    "scheme_name": "Haat Bazaar Clinic",
+    "state": "Chhattisgarh",
+    "sub": "Tribal Area Mobile Health Service",
+    "desc": "Mobile health clinics set up at weekly rural markets (haats) in tribal areas. Provides free basic healthcare, medicines, and referral services.",
+    "helpline": "104",
+    "color": "teal",
+    "tags": ["tribal", "mobile health", "rural", "primary care"]
+  },
+
+  {
+    "scheme_name": "Rajasthan Chiranjeevi Swasthya Bima Yojana",
+    "state": "Rajasthan",
+    "sub": "Rajasthan Universal Health Coverage",
+    "desc": "₹25 lakh per family per year (one of India's highest). All Rajasthan residents eligible — free for BPL, ₹850/year for others. 1,900+ packages.",
+    "helpline": "18001806127",
+    "color": "primary",
+    "extra": ["₹10 lakh general + ₹15 lakh for critical illness", "Includes road accident coverage"],
+    "tags": ["insurance", "universal", "accident", "cashless"]
+  },
+
+  {
+    "scheme_name": "Amma Unavagam – Subsidised Meals",
+    "state": "Tamil Nadu",
+    "sub": "Subsidised Canteen Programme (Nutrition)",
+    "desc": "Subsidised nutritious meals at ₹1–₹5 at government canteens. Supports urban poor nutritional health. 700+ canteens across Tamil Nadu.",
+    "helpline": null,
+    "color": "amber",
+    "tags": ["nutrition", "urban poor", "meals"]
+  },
+
+  {
+    "scheme_name": "Snehi – Kerala Mental Health",
+    "state": "Kerala",
+    "sub": "Kerala Community Mental Health Programme",
+    "desc": "Community-based mental health programme with outreach at panchayat level. Free counselling, crisis intervention, and medicines at PHCs.",
+    "helpline": "1056",
+    "color": "purple",
+    "tags": ["mental health", "community", "counselling"]
+  },
+  {
+    "scheme_name": "Karunya Health Scheme",
+    "state": "Kerala",
+    "sub": "Kerala BPL Health Insurance",
+    "desc": "Financial assistance up to ₹2 lakh for BPL families for treatment of serious illnesses at government hospitals. Covers cancer, cardiac & kidney diseases.",
+    "helpline": "0471-2302250",
+    "color": "blue",
+    "tags": ["BPL", "cancer", "cardiac", "kidney"]
+  },
+  {
+    "scheme_name": "MEDISEP – Kerala Employees Insurance",
+    "state": "Kerala",
+    "sub": "Kerala Medical Insurance for State Employees",
+    "desc": "Comprehensive health insurance for Kerala state government employees and pensioners. ₹3 lakh per year cashless at 700+ empanelled hospitals.",
+    "helpline": "1800-425-1520",
+    "color": "teal",
+    "tags": ["employees", "pensioners", "insurance", "cashless"]
+  },
+
+  {
+    "scheme_name": "Swasthya Sathi",
+    "state": "West Bengal",
+    "sub": "West Bengal Health Insurance Scheme",
+    "desc": "₹5 lakh per year cashless health cover for all West Bengal families. Smart card based. Covers 1,653 medical packages at 1,200+ hospitals.",
+    "helpline": "1800-345-5384",
+    "color": "primary",
+    "extra": ["Covers all WB residents — no income bar", "Primary card holder is the woman of the household"],
+    "tags": ["insurance", "universal", "women", "cashless"]
+  },
+
+  {
+    "scheme_name": "Atal Amrit Abhiyan",
+    "state": "Assam",
+    "sub": "Assam State Health Insurance",
+    "desc": "₹2 lakh per year per family for BPL and below ₹5 lakh income families in Assam. Covers 441 medical packages at 350+ empanelled hospitals.",
+    "helpline": "14555",
+    "color": "blue",
+    "tags": ["insurance", "BPL", "cashless"]
+  },
+
+  {
+    "scheme_name": "Mukhyamantri Swasthya Bima Yojana (MMSBY)",
+    "state": "Jharkhand",
+    "sub": "Jharkhand Health Insurance",
+    "desc": "₹5 lakh per family per year for all NFSA beneficiaries in Jharkhand. Cashless treatment at government and empanelled private hospitals.",
+    "helpline": "104",
+    "color": "primary",
+    "tags": ["insurance", "NFSA", "cashless"]
+  },
+
+  {
+    "scheme_name": "Dr. YSR Aarogyasri",
+    "state": "Telangana",
+    "sub": "Telangana Health Insurance",
+    "desc": "Free healthcare for all families with white ration cards. ₹5 lakh per year. 3,101 medical/surgical procedures covered at 450+ hospitals.",
+    "helpline": "104",
+    "color": "primary",
+    "extra": ["Includes cancer, cardiac, kidney, neuro surgeries", "Pre-existing diseases covered"],
+    "tags": ["insurance", "surgery", "cancer", "cashless"]
+  },
+
+  {
+    "scheme_name": "Himachal Pradesh Universal Health Protection Scheme",
+    "state": "Himachal Pradesh",
+    "sub": "HP Health Insurance for All",
+    "desc": "₹5 lakh per family per year for all HP residents. Covers all central scheme beneficiaries plus ₹2 lakh top-up for registered construction workers.",
+    "helpline": "14555",
+    "color": "blue",
+    "tags": ["insurance", "universal", "construction workers"]
+  },
+
+  {
+    "scheme_name": "Mukhyamantri Swasthya Bima Yojana",
+    "state": "Uttarakhand",
+    "sub": "Uttarakhand State Health Insurance",
+    "desc": "Enhanced coverage for Uttarakhand families. BPL families get ₹5 lakh cover. Integrated with Ayushman Bharat for seamless cashless treatment.",
+    "helpline": "14555",
+    "color": "primary",
+    "tags": ["insurance", "BPL", "cashless"]
+  },
+
+  {
+    "scheme_name": "Mukhyamantri Nishulk Dava Yojana",
+    "state": "Rajasthan",
+    "sub": "Free Medicine Scheme",
+    "desc": "Free essential medicines at all government health facilities in Rajasthan. 713 drugs in the free list. Also covers free diagnostics at government hospitals.",
+    "helpline": "104",
+    "color": "teal",
+    "tags": ["free medicines", "diagnostics", "OPD"]
+  },
+
+  {
+    "scheme_name": "Mukhyamantri Swasthya Bima Yojana",
+    "state": "Bihar",
+    "sub": "Bihar State Health Insurance",
+    "desc": "₹5 lakh per year for BPL and marginalized families. Covers 1,000+ procedures at government hospitals. Integrated with PM-JAY for enhanced coverage.",
+    "helpline": "104",
+    "color": "primary",
+    "tags": ["insurance", "BPL", "cashless"]
+  },
+
+  {
+    "scheme_name": "Delhi Arogya Kosh",
+    "state": "Delhi",
+    "sub": "Delhi State Health Insurance",
+    "desc": "₹5 lakh per year per family for Delhi residents not covered under PM-JAY. Cashless at 46 Delhi government hospitals. Covers 900+ procedures.",
+    "helpline": "011-23890224",
+    "color": "primary",
+    "tags": ["insurance", "Delhi residents", "cashless"]
+  },
+  {
+    "scheme_name": "Delhi Mohalla Clinic",
+    "state": "Delhi",
+    "sub": "Neighbourhood Primary Healthcare",
+    "desc": "500+ Mohalla Clinics providing free OPD consultation, 212 free medicines, 38 free diagnostic tests to all Delhi residents regardless of income.",
+    "helpline": "1031",
+    "color": "teal",
+    "extra": ["Walk-in, no appointment needed", "Free for all — no income or card requirement"],
+    "tags": ["primary care", "free OPD", "medicines", "diagnostics"]
+  },
+
+  {
+    "scheme_name": "Haryana Arogya Kosh",
+    "state": "Haryana",
+    "sub": "Haryana State Health Fund",
+    "desc": "Financial assistance for BPL families for treatment of serious diseases at government hospitals. Up to ₹1.5 lakh per case for chronic/critical illness.",
+    "helpline": "1800-180-2109",
+    "color": "blue",
+    "tags": ["BPL", "critical illness", "financial assistance"]
+  },
+  {
+    "scheme_name": "Mukhyamantri Muft Ilaj Yojana",
+    "state": "Haryana",
+    "sub": "Haryana Free Treatment at Govt Hospitals",
+    "desc": "Free treatment for all patients at government hospitals in Haryana. Covers OPD, IPD, medicines, surgeries, and diagnostics at no cost.",
+    "helpline": "104",
+    "color": "teal",
+    "tags": ["free treatment", "OPD", "surgery", "medicines"]
+  },
+
+  {
+    "scheme_name": "Mukhyamantri Jan Arogya Abhiyan",
+    "state": "Uttar Pradesh",
+    "sub": "UP State Health Mission",
+    "desc": "Enhances PM-JAY coverage for UP. Additional ₹5 lakh for state-list procedures. Covers all BPL families and construction workers.",
+    "helpline": "14555",
+    "color": "primary",
+    "tags": ["insurance", "BPL", "construction workers", "cashless"]
+  },
+
+  {
+    "scheme_name": "Mukhyamantri Swasthya Seva Mission",
+    "state": "Punjab",
+    "sub": "Punjab Health for All",
+    "desc": "₹5 lakh per year for Punjab BPL families. All government hospitals provide cashless services. Free OPD at Aam Aadmi Clinics (700+).",
+    "helpline": "104",
+    "color": "primary",
+    "extra": ["700+ Aam Aadmi Clinics for free OPD", "Free diagnostics and medicines at all govt hospitals"],
+    "tags": ["insurance", "BPL", "OPD", "primary care"]
+  }
+]
